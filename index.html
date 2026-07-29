@@ -1,0 +1,1246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="A ten-year plan to bend San Diego's transportation emissions curve: equitable vehicle electrification paired with reduced driving. POLI 117R final project.">
+<meta name="color-scheme" content="light dark">
+<title>Bending the Curve: San Diego Transportation Plan 2026 to 2036</title>
+<style>
+  :root {
+    --ground: #EDF1F4;
+    --surface: #FFFFFF;
+    --surface-2: #F4F7FA;
+    --line: #D3DCE6;
+    --line-soft: #E4EAF0;
+    --ink: #0C1320;
+    --ink-2: #35415A;
+    --muted: #5F6D85;
+    --amber: #B75E18;
+    --amber-fill: rgba(183, 94, 24, .14);
+    --teal: #0B7A6E;
+    --teal-fill: rgba(11, 122, 110, .14);
+    --signal: #BE3018;
+    --grid: rgba(12, 19, 32, .09);
+    --shadow: 0 1px 2px rgba(12,19,32,.06), 0 12px 32px -12px rgba(12,19,32,.18);
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, "Helvetica Neue", Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Cascadia Mono", "Roboto Mono", Consolas, monospace;
+    --maxw: 1180px;
+    --r: 14px;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --ground: #080C15;
+      --surface: #101827;
+      --surface-2: #162033;
+      --line: #243049;
+      --line-soft: #1B2439;
+      --ink: #EDF2F9;
+      --ink-2: #C3CEE0;
+      --muted: #7F91AD;
+      --amber: #F2953F;
+      --amber-fill: rgba(242, 149, 63, .16);
+      --teal: #3ED2BE;
+      --teal-fill: rgba(62, 210, 190, .15);
+      --signal: #FF6250;
+      --grid: rgba(237, 242, 249, .08);
+      --shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 44px -16px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"] {
+    --ground: #EDF1F4; --surface: #FFFFFF; --surface-2: #F4F7FA;
+    --line: #D3DCE6; --line-soft: #E4EAF0; --ink: #0C1320; --ink-2: #35415A;
+    --muted: #5F6D85; --amber: #B75E18; --amber-fill: rgba(183,94,24,.14);
+    --teal: #0B7A6E; --teal-fill: rgba(11,122,110,.14); --signal: #BE3018;
+    --grid: rgba(12,19,32,.09);
+    --shadow: 0 1px 2px rgba(12,19,32,.06), 0 12px 32px -12px rgba(12,19,32,.18);
+  }
+  :root[data-theme="dark"] {
+    --ground: #080C15; --surface: #101827; --surface-2: #162033;
+    --line: #243049; --line-soft: #1B2439; --ink: #EDF2F9; --ink-2: #C3CEE0;
+    --muted: #7F91AD; --amber: #F2953F; --amber-fill: rgba(242,149,63,.16);
+    --teal: #3ED2BE; --teal-fill: rgba(62,210,190,.15); --signal: #FF6250;
+    --grid: rgba(237,242,249,.08);
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 18px 44px -16px rgba(0,0,0,.7);
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--ground);
+    color: var(--ink);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: var(--maxw); margin: 0 auto; padding: 0 24px; }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin: 0 0 14px;
+    display: flex; align-items: center; gap: 10px;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  }
+  .eyebrow::before {
+    content: ""; width: 22px; height: 2px; background: var(--teal); flex: none; border-radius: 2px;
+  }
+
+  h1 {
+    font-size: clamp(2.4rem, 5.4vw, 4.35rem);
+    font-weight: 800;
+    letter-spacing: -.038em;
+    line-height: .96;
+    margin: 0 0 20px;
+    text-wrap: balance;
+  }
+  h2 {
+    font-size: clamp(1.75rem, 3.4vw, 2.6rem);
+    font-weight: 800;
+    letter-spacing: -.03em;
+    line-height: 1.06;
+    margin: 0 0 16px;
+    text-wrap: balance;
+  }
+  h3 { font-size: 1.15rem; font-weight: 700; letter-spacing: -.012em; margin: 0 0 8px; }
+  p { margin: 0 0 16px; max-width: 64ch; color: var(--ink-2); }
+  .lede { font-size: 1.16rem; color: var(--ink-2); max-width: 60ch; }
+
+  /* ---------- top bar ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 40;
+    background: var(--ground);
+    border-bottom: 1px solid var(--line-soft);
+  }
+  .topbar-in {
+    max-width: var(--maxw); margin: 0 auto; padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  }
+  .brand { display: flex; align-items: center; gap: 11px; font-family: var(--mono); font-size: .78rem; letter-spacing: .08em; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+  @media (max-width: 600px) { .brand { font-size: .68rem; letter-spacing: .04em; } }
+  .brand-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--teal); box-shadow: 0 0 0 4px var(--teal-fill); flex: none; }
+  .themebtn {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    background: transparent; color: var(--muted); border: 1px solid var(--line);
+    padding: 7px 13px; border-radius: 999px; cursor: pointer;
+  }
+  .themebtn:hover { color: var(--ink); border-color: var(--muted); }
+  .themebtn:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 72px 0 26px; }
+  .hero-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 42px; align-items: end; }
+  @media (max-width: 900px) { .hero-grid { grid-template-columns: 1fr; gap: 24px; align-items: start; } }
+  .hero-note {
+    border-left: 2px solid var(--line);
+    padding-left: 18px;
+    font-size: .95rem;
+    color: var(--muted);
+  }
+  .hero-note strong { color: var(--ink); font-weight: 650; }
+
+  /* ---------- chart card ---------- */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: var(--r);
+    box-shadow: var(--shadow);
+  }
+  .chart-card { margin: 34px 0 0; overflow: hidden; }
+  .chart-head {
+    display: flex; flex-wrap: wrap; gap: 18px 28px; align-items: baseline; justify-content: space-between;
+    padding: 20px 24px 14px; border-bottom: 1px solid var(--line-soft);
+  }
+  .chart-title { font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; margin: 0; }
+  .chart-sub { font-family: var(--mono); font-size: .74rem; color: var(--muted); letter-spacing: .04em; margin: 5px 0 0; }
+  .legend { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--mono); font-size: .72rem; color: var(--ink-2); letter-spacing: .03em; }
+  .legend span { display: inline-flex; align-items: center; gap: 7px; white-space: nowrap; }
+  .swatch { width: 16px; height: 3px; border-radius: 2px; flex: none; }
+  .swatch.dash { height: 0; border-top: 2px dashed var(--signal); }
+
+  /* Contain paint so redrawing the animated chart cannot force the card's
+     large drop shadow to repaint along with it. */
+  .chart-body { padding: 8px 10px 0; contain: layout paint; }
+  svg.chart { display: block; width: 100%; height: auto; }
+  svg.chart text { font-family: var(--mono); fill: var(--muted); }
+
+  /* ---------- controls ---------- */
+  .controls {
+    display: flex; align-items: center; gap: 16px;
+    padding: 14px 24px 18px; border-top: 1px solid var(--line-soft); flex-wrap: wrap;
+  }
+  .playbtn {
+    width: 46px; height: 46px; border-radius: 50%; flex: none; cursor: pointer;
+    border: 1px solid var(--teal); background: var(--teal-fill); color: var(--teal);
+    display: grid; place-items: center; transition: transform .15s ease;
+  }
+  .playbtn:hover { transform: scale(1.06); }
+  .playbtn:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+  .playbtn svg { width: 17px; height: 17px; fill: currentColor; }
+  .scrub { flex: 1 1 240px; display: flex; align-items: center; gap: 13px; min-width: 200px; }
+  input[type="range"] {
+    -webkit-appearance: none; appearance: none; width: 100%; height: 4px; border-radius: 4px;
+    background: linear-gradient(to right, var(--teal) var(--pct,0%), var(--line) var(--pct,0%));
+    cursor: pointer;
+  }
+  input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none; width: 17px; height: 17px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--teal); cursor: grab;
+  }
+  input[type="range"]::-moz-range-thumb {
+    width: 15px; height: 15px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--teal); cursor: grab; border-color: var(--teal);
+  }
+  input[type="range"]:focus-visible { outline: 2px solid var(--teal); outline-offset: 4px; }
+  .yearchip {
+    font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.02rem; font-weight: 600;
+    color: var(--ink); min-width: 4.2ch; text-align: right;
+  }
+
+  /* ---------- counters ---------- */
+  .counters {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px;
+    background: var(--line-soft); border-top: 1px solid var(--line-soft);
+  }
+  @media (max-width: 760px) { .counters { grid-template-columns: repeat(2, 1fr); } }
+  .counter { background: var(--surface); padding: 16px 18px 18px; }
+  .counter-val {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: clamp(1.3rem, 2.4vw, 1.72rem); font-weight: 600; letter-spacing: -.02em;
+    color: var(--ink); line-height: 1.1;
+  }
+  .counter-val .u { font-size: .62em; color: var(--muted); margin-left: 3px; font-weight: 500; }
+  .counter-lab { font-size: .78rem; color: var(--muted); margin-top: 6px; line-height: 1.35; }
+
+  /* ---------- sections ---------- */
+  section.band { padding: 82px 0; border-top: 1px solid var(--line-soft); }
+  .sec-head { max-width: 62ch; margin-bottom: 40px; }
+
+  /* margin stat */
+  .margin-grid { display: grid; grid-template-columns: minmax(0,.9fr) minmax(0,1.1fr); gap: 48px; align-items: center; }
+  @media (max-width: 860px) { .margin-grid { grid-template-columns: 1fr; gap: 28px; } }
+  .bignum {
+    font-family: var(--mono); font-size: clamp(4.2rem, 13vw, 8.4rem); font-weight: 600;
+    letter-spacing: -.05em; line-height: .86; color: var(--signal);
+    font-variant-numeric: tabular-nums;
+  }
+  .bignum-sub { font-family: var(--mono); font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin-top: 14px; }
+
+  /* inventory bars */
+  .bars { display: flex; flex-direction: column; gap: 11px; }
+  .bar-row { display: grid; grid-template-columns: 190px 1fr 52px; gap: 16px; align-items: center; }
+  @media (max-width: 680px) { .bar-row { grid-template-columns: 130px 1fr 44px; gap: 10px; } }
+  .bar-lab { font-size: .87rem; color: var(--ink-2); line-height: 1.3; }
+  .bar-track { height: 26px; background: var(--surface-2); border-radius: 4px; overflow: hidden; }
+  .bar-fill { height: 100%; width: 0; border-radius: 4px; transition: width 1.1s cubic-bezier(.22,1,.36,1); }
+  .bar-val { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .85rem; color: var(--ink); text-align: right; }
+  .bar-row.hi .bar-lab { color: var(--ink); font-weight: 650; }
+
+  /* equity stats */
+  .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+  @media (max-width: 900px) { .stat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 520px) { .stat-grid { grid-template-columns: 1fr; } }
+  .stat { padding: 24px 22px 26px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+  .stat-n {
+    font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: clamp(2.1rem, 4.6vw, 2.9rem); font-weight: 600; letter-spacing: -.04em;
+    line-height: 1; color: var(--teal);
+  }
+  .stat-n.warn { color: var(--amber); }
+  .stat-t { font-size: .92rem; color: var(--ink-2); margin-top: 12px; line-height: 1.45; }
+
+  /* levers */
+  .levers { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+  @media (max-width: 820px) { .levers { grid-template-columns: 1fr; } }
+  .lever { padding: 30px 28px 32px; border-radius: var(--r); background: var(--surface); border: 1px solid var(--line); }
+  .lever-tag {
+    font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--teal); margin-bottom: 14px;
+  }
+  .lever ul { margin: 16px 0 0; padding-left: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .lever li { font-size: .92rem; color: var(--ink-2); padding-left: 20px; position: relative; line-height: 1.5; }
+  .lever li::before {
+    content: ""; position: absolute; left: 0; top: .55em;
+    width: 7px; height: 7px; border-radius: 50%; background: var(--teal); opacity: .5;
+  }
+
+  /* route / timeline */
+  .route { position: relative; padding-left: 34px; }
+  .route::before {
+    content: ""; position: absolute; left: 8px; top: 10px; bottom: 10px; width: 3px;
+    background: linear-gradient(to bottom, var(--amber), var(--teal)); border-radius: 3px; opacity: .55;
+  }
+  .stop { position: relative; padding: 0 0 34px; }
+  .stop:last-child { padding-bottom: 0; }
+  .stop::before {
+    content: ""; position: absolute; left: -34px; top: 5px;
+    width: 19px; height: 19px; border-radius: 50%;
+    background: var(--surface); border: 3px solid var(--teal);
+    box-shadow: 0 0 0 4px var(--ground);
+  }
+  .stop.policy::before { border-color: var(--signal); }
+  .stop-year {
+    font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .82rem;
+    letter-spacing: .1em; color: var(--muted); margin-bottom: 4px;
+  }
+  .stop-t { font-size: 1.02rem; font-weight: 650; letter-spacing: -.012em; margin-bottom: 5px; }
+  .stop-d { font-size: .91rem; color: var(--ink-2); max-width: 56ch; margin: 0; }
+  .pill {
+    display: inline-block; font-family: var(--mono); font-size: .64rem; letter-spacing: .1em;
+    text-transform: uppercase; padding: 3px 9px; border-radius: 999px; margin-left: 8px;
+    border: 1px solid var(--signal); color: var(--signal); vertical-align: 2px;
+  }
+
+  /* sources table */
+  .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--r); background: var(--surface); }
+  table { width: 100%; border-collapse: collapse; min-width: 640px; }
+  th, td { text-align: left; padding: 13px 18px; border-bottom: 1px solid var(--line-soft); font-size: .88rem; vertical-align: top; }
+  th { font-family: var(--mono); font-size: .69rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+  td:first-child { color: var(--ink); font-weight: 550; }
+  td { color: var(--ink-2); }
+  tr:last-child td { border-bottom: none; }
+  .tag {
+    font-family: var(--mono); font-size: .64rem; letter-spacing: .09em; text-transform: uppercase;
+    padding: 3px 8px; border-radius: 4px; white-space: nowrap;
+  }
+  .tag.real { background: var(--teal-fill); color: var(--teal); }
+  .tag.model { background: var(--amber-fill); color: var(--amber); }
+
+  .callout {
+    border-left: 3px solid var(--amber); background: var(--surface); padding: 20px 24px;
+    border-radius: 0 var(--r) var(--r) 0; margin-top: 30px;
+  }
+  .callout p { margin: 0; font-size: .93rem; }
+
+  footer { padding: 46px 0 70px; border-top: 1px solid var(--line-soft); }
+  .foot { display: flex; flex-wrap: wrap; gap: 14px 30px; justify-content: space-between; align-items: baseline; }
+  .foot p { font-family: var(--mono); font-size: .74rem; color: var(--muted); letter-spacing: .04em; margin: 0; max-width: none; }
+  a { color: var(--teal); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--teal) 40%, transparent); }
+  a:hover { border-bottom-color: var(--teal); }
+  a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+
+  /* ---------- map ---------- */
+  .map-card { overflow: hidden; }
+  .map-head {
+    display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between;
+    padding: 18px 22px; border-bottom: 1px solid var(--line-soft);
+  }
+  .map-toggle { display: inline-flex; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
+  .map-toggle button {
+    font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
+    border: none; background: transparent; color: var(--muted); cursor: pointer;
+    padding: 8px 15px; border-radius: 999px; white-space: nowrap;
+  }
+  .map-toggle button.on { background: var(--teal); color: var(--ground); font-weight: 600; }
+  .map-toggle button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
+  .map-legend { display: flex; flex-wrap: wrap; gap: 7px 16px; font-family: var(--mono); font-size: .68rem; color: var(--ink-2); letter-spacing: .03em; }
+  .map-legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .lg-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .lg-line { width: 15px; height: 3px; border-radius: 2px; flex: none; }
+
+  .map-layout { display: grid; grid-template-columns: 1fr 286px; }
+  @media (max-width: 900px) { .map-layout { grid-template-columns: 1fr; } }
+  .map-body { padding: 6px 4px 0; min-width: 0; overflow-x: auto; }
+  svg.map { display: block; width: 100%; height: auto; }
+  @media (max-width: 760px) {
+    svg.map { min-width: 620px; }
+    .map-body::after {
+      content: "Scroll the map sideways to see the full region";
+      display: block; font-family: var(--mono); font-size: .66rem; color: var(--muted);
+      letter-spacing: .04em; padding: 2px 8px 10px; position: sticky; left: 0;
+    }
+  }
+  svg.map text { font-family: var(--mono); fill: var(--muted); }
+  svg.map .hood { cursor: pointer; }
+  svg.map .hood:focus { outline: none; }
+  svg.map .hood:focus-visible circle:first-child { stroke: var(--ink); stroke-width: 2.5; }
+
+  .map-info {
+    border-left: 1px solid var(--line-soft); padding: 22px 22px 24px;
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  @media (max-width: 900px) { .map-info { border-left: none; border-top: 1px solid var(--line-soft); } }
+  .mi-tag { font-family: var(--mono); font-size: .66rem; letter-spacing: .13em; text-transform: uppercase; color: var(--signal); }
+  .mi-tag.ok { color: var(--teal); }
+  .mi-name { font-size: 1.15rem; font-weight: 750; letter-spacing: -.02em; line-height: 1.15; }
+  .mi-body { font-size: .88rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
+  .mi-hint { font-family: var(--mono); font-size: .68rem; color: var(--muted); letter-spacing: .04em; margin-top: auto; padding-top: 12px; }
+
+  .map-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border-top: 1px solid var(--line-soft); }
+  @media (max-width: 620px) { .map-stats { grid-template-columns: 1fr; } }
+  .map-stat { background: var(--surface); padding: 15px 20px 17px; }
+  .ms-v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.5rem; font-weight: 600; letter-spacing: -.025em; color: var(--ink); line-height: 1.1; }
+  .ms-v .u { font-size: .6em; color: var(--muted); margin-left: 2px; }
+  .ms-l { font-size: .76rem; color: var(--muted); margin-top: 5px; line-height: 1.35; }
+
+  .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1); }
+  .reveal.in { opacity: 1; transform: none; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: .001ms !important; transition-duration: .001ms !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
+</style>
+</head>
+<body>
+
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="brand"><span class="brand-dot"></span> Bending the Curve · San Diego</div>
+    <button class="themebtn" id="themebtn" type="button">Theme</button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header class="hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">POLI 117R · Regional Climate Solution · 2026 to 2036</p>
+        <h1>Half of San&nbsp;Diego's climate footprint rolls down its roads.</h1>
+        <p class="lede">A ten-year plan to bend the region's transportation emissions curve by cleaning the vehicles that remain, and shrinking the miles we have to drive at all.</p>
+      </div>
+      <div class="hero-note">
+        <p style="margin:0">California requires San Diego to cut per-capita emissions from cars and light trucks <strong>19% below 2005 levels by 2035</strong>.<br><br>The region's adopted plan clears that bar by <strong>0.35 percentage points</strong>. There is no margin left for anything going wrong.</p>
+      </div>
+    </div>
+
+    <div class="card chart-card">
+      <div class="chart-head">
+        <div>
+          <p class="chart-title">Per-capita CO₂ from cars &amp; light-duty trucks</p>
+          <p class="chart-sub">LBS PER PERSON PER WEEKDAY · SB 375 METRIC</p>
+        </div>
+        <div class="legend">
+          <span><i class="swatch" style="background:var(--muted)"></i>Reported trend</span>
+          <span><i class="swatch" style="background:var(--amber)"></i>Business as usual</span>
+          <span><i class="swatch" style="background:var(--teal)"></i>With this plan</span>
+          <span><i class="swatch dash"></i>State target (19%)</span>
+        </div>
+      </div>
+
+      <div class="chart-body">
+        <svg class="chart" id="chart" viewBox="0 0 1000 470" role="img" aria-label="Line chart of per-capita transportation CO2 emissions in the San Diego region from 2005 to 2036, comparing a business-as-usual path that misses the state target with a plan path that clears it.">
+          <defs>
+            <clipPath id="revealClip"><rect id="revealRect" x="0" y="0" width="0" height="470"></rect></clipPath>
+            <linearGradient id="gapGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="var(--amber)" stop-opacity=".20"></stop>
+              <stop offset="100%" stop-color="var(--teal)" stop-opacity=".05"></stop>
+            </linearGradient>
+          </defs>
+          <g id="gridG"></g>
+          <g id="axisG"></g>
+          <path id="targetLine" stroke="var(--signal)" stroke-width="1.6" stroke-dasharray="6 5" fill="none" opacity=".85"></path>
+          <text id="targetLab" font-size="12" fill="var(--signal)" letter-spacing=".06em"></text>
+          <path id="histPath" fill="none" stroke="var(--muted)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" opacity=".65"></path>
+          <g clip-path="url(#revealClip)">
+            <path id="gapArea" fill="url(#gapGrad)" stroke="none"></path>
+            <path id="bauPath" fill="none" stroke="var(--amber)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"></path>
+            <path id="planPath" fill="none" stroke="var(--teal)" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"></path>
+          </g>
+          <g id="stationsG"></g>
+          <g id="headG"></g>
+        </svg>
+      </div>
+
+      <div class="controls">
+        <button class="playbtn" id="playbtn" type="button" aria-label="Play the plan timeline">
+          <svg id="playicon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+        <div class="scrub">
+          <input type="range" id="scrub" min="2026" max="2036" step="0.02" value="2026" aria-label="Scrub through plan years">
+          <span class="yearchip" id="yearchip">2026</span>
+        </div>
+      </div>
+
+      <div class="counters">
+        <div class="counter">
+          <div class="counter-val" id="c1">0</div>
+          <div class="counter-lab">Zero-emission vehicles on San&nbsp;Diego roads</div>
+        </div>
+        <div class="counter">
+          <div class="counter-val" id="c2">0</div>
+          <div class="counter-lab">Public chargers sited in disadvantaged &amp; multifamily areas</div>
+        </div>
+        <div class="counter">
+          <div class="counter-val" id="c3">0<span class="u">Mt</span></div>
+          <div class="counter-lab">Cumulative CO₂ avoided vs. business as usual</div>
+        </div>
+        <div class="counter">
+          <div class="counter-val" id="c4">12<span class="u">%</span></div>
+          <div class="counter-lab">Low-income residents within ½ mile of frequent transit</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="band reveal">
+    <div class="margin-grid">
+      <div>
+        <div class="bignum">0.35</div>
+        <div class="bignum-sub">Percentage points of margin</div>
+      </div>
+      <div>
+        <p class="eyebrow">The compliance problem</p>
+        <h2>A plan that passes by a rounding error is not a plan that passes.</h2>
+        <p>Senate Bill 375 requires the San Diego region to cut per-capita greenhouse gas emissions from cars and light-duty trucks <strong>19% below 2005 levels by 2035</strong>. The 2005 baseline is 26 pounds of CO₂ per person per weekday.</p>
+        <p>SANDAG's 2025 Regional Plan, adopted in December 2025, is projected to deliver <strong>19.35%</strong>. The 2021 Regional Plan projected 20%. The margin is shrinking, not growing, and every assumption inside it has to hold for a decade.</p>
+        <p>Meanwhile the region removed its four-cents-per-mile road usage charge in December 2021, leaving part of the funding structure unresolved.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="band reveal">
+    <div class="sec-head">
+      <p class="eyebrow">Where it comes from</p>
+      <h2>Transportation isn't one sector among many. It's the whole problem.</h2>
+      <p>San Diego's 2016 regional greenhouse gas inventory. On-road vehicles account for 48% of emissions, more than electricity, natural gas, and industry combined.</p>
+    </div>
+    <div class="bars" id="bars"></div>
+  </section>
+
+  <section class="band reveal">
+    <div class="sec-head">
+      <p class="eyebrow">Who pays for it</p>
+      <h2>The people driving least are absorbing the most.</h2>
+      <p>Car dependence is not distributed evenly, and neither is the pollution it creates. The neighborhoods with the least transit access sit closest to the freeways carrying everyone else's commute.</p>
+    </div>
+    <div class="stat-grid">
+      <div class="stat">
+        <div class="stat-n warn">12<span style="font-size:.55em">%</span></div>
+        <div class="stat-t">of low-income residents live within a half mile of a commuter rail, light rail, or Rapid transit stop</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n warn">93<span style="font-size:.55em">%</span></div>
+        <div class="stat-t">lack access to fast, frequent transit, according to the Environmental Health Coalition</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n warn">$10k</div>
+        <div class="stat-t">typical annual cost of owning and operating a vehicle in San Diego County</div>
+      </div>
+      <div class="stat">
+        <div class="stat-n warn">35<span style="font-size:.55em">%</span></div>
+        <div class="stat-t">of regional households earn under $45,000 a year</div>
+      </div>
+    </div>
+    <div class="callout">
+      <p><strong>Why this shapes the design of the plan.</strong> Rebates that assume a homeowner with a private garage exclude renters by default. National research found that even at identical incomes, white-majority neighborhoods were far more likely to have rooftop solar than Black-majority or Hispanic-majority neighborhoods. Clean technology does not distribute itself equitably. It has to be aimed.</p>
+    </div>
+  </section>
+
+  <section class="band reveal">
+    <div class="sec-head">
+      <p class="eyebrow">Where it lands</p>
+      <h2>The gap has an address.</h2>
+      <p>Transit access in San Diego is not spread evenly across the region. It runs in a few corridors, and the neighborhoods carrying the heaviest pollution burden are largely not on them. Switch the map to 2036 to see where this plan puts new transit and new charging.</p>
+    </div>
+
+    <div class="card map-card">
+      <div class="map-head">
+        <div class="map-toggle" role="group" aria-label="Map time period">
+          <button type="button" data-view="today" class="on">Today</button>
+          <button type="button" data-view="future">2036 with plan</button>
+        </div>
+        <div class="map-legend">
+          <span><i class="lg-dot" style="background:var(--signal)"></i>High burden</span>
+          <span><i class="lg-dot" style="background:var(--muted)"></i>Employment center</span>
+          <span><i class="lg-line" style="background:var(--teal)"></i>Transit</span>
+          <span><i class="lg-line" style="background:var(--amber);opacity:.55"></i>Freeway</span>
+          <span><i class="lg-dot" style="background:var(--teal);opacity:.28"></i>½ mile of transit</span>
+        </div>
+      </div>
+
+      <div class="map-layout">
+        <div class="map-body">
+          <svg class="map" id="map" viewBox="0 0 780 640" role="img" aria-label="Schematic map of the San Diego metropolitan area showing freeway corridors, transit lines, half-mile transit access areas, and the neighborhoods carrying the highest pollution burden."></svg>
+        </div>
+        <div class="map-info">
+          <div class="mi-tag" id="miTag">Select a neighborhood</div>
+          <div class="mi-name" id="miName">San Diego region</div>
+          <p class="mi-body" id="miBody">Seven neighborhoods on this map carry the region's heaviest transportation pollution burden. Every one of them sits against a freeway, a port, or a border crossing. Tap any red marker to read why.</p>
+          <div class="mi-hint" id="miHint">Schematic map. Distances distorted for legibility.</div>
+        </div>
+      </div>
+
+      <div class="map-stats">
+        <div class="map-stat">
+          <div class="ms-v" id="ms1">12<span class="u">%</span></div>
+          <div class="ms-l">Low-income residents within ½ mile of frequent transit</div>
+        </div>
+        <div class="map-stat">
+          <div class="ms-v" id="ms2">3<span class="u">of 7</span></div>
+          <div class="ms-l">High-burden neighborhoods served by frequent transit</div>
+        </div>
+        <div class="map-stat">
+          <div class="ms-v" id="ms3">0</div>
+          <div class="ms-l">Public chargers sited by equity map</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band reveal">
+    <div class="sec-head">
+      <p class="eyebrow">The two levers</p>
+      <h2>Clean the cars that remain. Shrink the miles we have to drive.</h2>
+      <p>Neither lever is sufficient alone. Electrification cannot outrun rising vehicle miles traveled, and transit cannot be built fast enough to carry a region this spread out. Pulled together, they attack the problem from both ends.</p>
+    </div>
+    <div class="levers">
+      <div class="lever">
+        <div class="lever-tag">Lever 01 · Vehicles</div>
+        <h3>Equitable electrification</h3>
+        <p style="font-size:.95rem">Convert electric vehicle incentives into income-tiered, point-of-sale rebates, and aim charging investment at multifamily housing and disadvantaged communities rather than letting market demand decide where it lands.</p>
+        <ul>
+          <li>Rebate applied at purchase, not at tax filing, scaled by household income</li>
+          <li>Charging build-out prioritized by a published equity map, not by demand</li>
+          <li>Funded from existing streams: California directs ≥35% of cap-and-trade proceeds to disadvantaged communities; federal Justice40 commits 40%</li>
+        </ul>
+      </div>
+      <div class="lever">
+        <div class="lever-tag">Lever 02 · Mobility</div>
+        <h3>Reduce the need to drive</h3>
+        <p style="font-size:.95rem">Sequence transit corridors and Mobility Hubs together with rezoning and affordable housing, so new homes arrive with the transit that serves them, and capture the short trips that need no car at all.</p>
+        <ul>
+          <li>Transit Leap corridors phased alongside transit-oriented affordable housing</li>
+          <li>Complete Streets and micromobility in Mobility Hubs</li>
+          <li>Nearly half of all regional trips are three miles or less, the most replaceable miles we have</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="band reveal">
+    <div class="sec-head">
+      <p class="eyebrow">The route</p>
+      <h2>Ten years, seven stops.</h2>
+      <p>Each milestone is a point where the curve visibly changes slope. Items marked <em>adopted policy</em> already exist in state law; the rest are this plan's recommendations.</p>
+    </div>
+    <div class="route" id="route"></div>
+  </section>
+
+  <section class="band reveal">
+    <div class="sec-head">
+      <p class="eyebrow">Method</p>
+      <h2>What's measured, and what's modeled.</h2>
+      <p>Every figure on this page is one of two things: a reported value from a public source, or a projection generated from stated assumptions. Nothing is presented as data that isn't.</p>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead>
+          <tr><th>Figure</th><th>Value</th><th>Status</th><th>Source</th></tr>
+        </thead>
+        <tbody>
+          <tr><td>2005 baseline emissions</td><td>26 lbs CO₂ / person / weekday</td><td><span class="tag real">Reported</span></td><td>CARB, SB 375 target setting</td></tr>
+          <tr><td>State target, 2035</td><td>19% below 2005</td><td><span class="tag real">Reported</span></td><td>CARB, SB 375</td></tr>
+          <tr><td>2025 Regional Plan projection</td><td>19.35% below 2005</td><td><span class="tag real">Reported</span></td><td>SANDAG, 2025 Regional Plan EIR</td></tr>
+          <tr><td>2021 Regional Plan projection</td><td>20% below 2005</td><td><span class="tag real">Reported</span></td><td>SANDAG, 2021 Regional Plan, Ch. 2</td></tr>
+          <tr><td>Regional emissions by sector</td><td>41% light-duty, 7% heavy-duty</td><td><span class="tag real">Reported</span></td><td>SANDAG 2016 GHG Inventory</td></tr>
+          <tr><td>Transit access, low-income</td><td>12% within ½ mile</td><td><span class="tag real">Reported</span></td><td>SANDAG, 2021 Regional Plan, Ch. 1</td></tr>
+          <tr><td>Commute mode share</td><td>79% drive alone, 3% transit</td><td><span class="tag real">Reported</span></td><td>SANDAG, 2021 Regional Plan</td></tr>
+          <tr><td>Statewide ZEV share of new sales</td><td>~22% of sales, 2025</td><td><span class="tag real">Reported</span></td><td>California Energy Commission</td></tr>
+          <tr><td>Business-as-usual path, 2026 to 2036</td><td>Reaches 17.9% below 2005</td><td><span class="tag model">Modeled</span></td><td>Assumes VMT per capita flat and fleet turnover at current ZEV sales share</td></tr>
+          <tr><td>Plan path, 2026 to 2036</td><td>Reaches 30% below 2005</td><td><span class="tag model">Modeled</span></td><td>Assumes 100% ZEV new sales by 2035 per EO N-79-20, ~7%/yr fleet turnover, and VMT per capita declining 0.8%/yr</td></tr>
+          <tr><td>Counters (vehicles, chargers, CO₂)</td><td>See chart</td><td><span class="tag model">Modeled</span></td><td>Derived from the two paths above; illustrative of scale, not forecasts</td></tr>
+          <tr><td>Map: freeways, trolley lines, neighborhoods</td><td>Positions on the map</td><td><span class="tag real">Reported</span></td><td>Real corridors and Metropolitan Transit System lines, drawn schematically. Distances are distorted for legibility, as on any transit diagram</td></tr>
+          <tr><td>Map: high burden neighborhoods</td><td>Seven marked</td><td><span class="tag real">Reported</span></td><td>Communities identified as disadvantaged in CalEnviroScreen and in SANDAG social equity analysis</td></tr>
+          <tr><td>Map: 2036 corridors and chargers</td><td>Dashed lines and charger marks</td><td><span class="tag model">Modeled</span></td><td>This plan's proposed siting. Not adopted projects, and placement is illustrative rather than engineered</td></tr>
+          <tr><td>Historical path, 2005 to 2025</td><td>Curve shown in grey</td><td><span class="tag model">Modeled</span></td><td>Interpolated between reported benchmark years; reflects the post-2013 rebound in driving</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="callout">
+      <p><strong>A note on scale.</strong> San Diego produces a small fraction of global emissions. The case for acting here is not that the region can solve the problem alone. It is that California's regions function as living laboratories, and that the health burden of these emissions falls locally, on people who are already breathing them.</p>
+    </div>
+  </section>
+
+  <footer>
+    <div class="foot">
+      <p>POLI 117R · Bending the Curve · Final Project</p>
+      <p>Sources: SANDAG · CARB · California Energy Commission · Environmental Health Coalition</p>
+    </div>
+  </footer>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- theme ---------- */
+  var root = document.documentElement;
+  var btn = document.getElementById("themebtn");
+  btn.addEventListener("click", function () {
+    var cur = root.getAttribute("data-theme");
+    if (!cur) {
+      cur = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    }
+    root.setAttribute("data-theme", cur === "dark" ? "light" : "dark");
+  });
+
+  /* ---------- data ---------- */
+  var BASE = 26.0;              // lbs CO2 / person / weekday, 2005 (CARB)
+  var TARGET = BASE * 0.81;     // 19% below 2005 = 21.06
+
+  var history = [
+    [2005, 26.00], [2007, 25.55], [2009, 24.90], [2011, 24.55], [2013, 24.35],
+    [2015, 24.55], [2016, 24.60], [2017, 24.45], [2018, 24.30], [2019, 24.15],
+    [2020, 21.80], [2021, 23.10], [2022, 23.60], [2023, 23.30], [2024, 22.90],
+    [2025, 22.60], [2026, 22.40]
+  ];
+  var bau = [
+    [2026, 22.40], [2027, 22.25], [2028, 22.05], [2029, 21.90], [2030, 21.75],
+    [2031, 21.62], [2032, 21.52], [2033, 21.45], [2034, 21.40], [2035, 21.35], [2036, 21.30]
+  ];
+  var plan = [
+    [2026, 22.40], [2027, 22.10], [2028, 21.60], [2029, 21.00], [2030, 20.30],
+    [2031, 19.70], [2032, 19.20], [2033, 18.80], [2034, 18.50], [2035, 18.20], [2036, 17.90]
+  ];
+
+  var stations = [
+    { y: 2026, t: "Plan adopted", d: "SANDAG adopts an income-tiered rebate structure and commits cap-and-trade and Justice40 revenue to the charging equity program." },
+    { y: 2027, t: "Charging equity map published", d: "First 1,200 public chargers sited in multifamily housing and disadvantaged communities, aimed by the map rather than by market demand." },
+    { y: 2028, t: "Point-of-sale rebates live", d: "Rebates apply at purchase and scale by household income, so buying an electric vehicle no longer requires fronting the cost and waiting for a tax refund." },
+    { y: 2030, t: "Transit Leap corridor opens", d: "First high-frequency corridor enters service, phased alongside transit-oriented affordable housing so new homes arrive with the transit that serves them." },
+    { y: 2032, t: "Complete Streets built out", d: "Mobility Hub areas get protected bikeways, safe crossings, and micromobility, targeting the short trips that make up nearly half of all regional travel." },
+    { y: 2035, t: "100% zero-emission new vehicle sales", d: "Every new passenger vehicle sold in California must be zero-emission. This one is not a recommendation. It is already state law.", policy: true },
+    { y: 2036, t: "Plan horizon", d: "Modeled result: roughly 30% below 2005 levels, clearing the state's 19% requirement with genuine margin rather than a rounding error." }
+  ];
+
+  var inventory = [
+    ["On-road: cars & light trucks", 41, true],
+    ["Electricity", 21, false],
+    ["Natural gas", 12, false],
+    ["Industrial", 8, false],
+    ["On-road: heavy-duty", 7, true],
+    ["Other fuels", 4, false],
+    ["Off-road transportation", 2, true],
+    ["Solid waste", 2, false],
+    ["Aviation, water, rail", 3, false]
+  ];
+
+  /* ---------- chart geometry (rebuilt responsively) ---------- */
+  var W, H, M, FS;
+  var X0 = 2005, X1 = 2036, Y0 = 16.5, Y1 = 26.8;
+
+  function setGeometry() {
+    var narrow = window.innerWidth < 760;
+    if (narrow) { W = 440; H = 380; M = { t: 22, r: 16, b: 34, l: 34 }; FS = 12; }
+    else        { W = 1000; H = 470; M = { t: 26, r: 26, b: 42, l: 54 }; FS = 12; }
+  }
+  setGeometry();
+
+  function sx(y) { return M.l + (y - X0) / (X1 - X0) * (W - M.l - M.r); }
+  function sy(v) { return M.t + (Y1 - v) / (Y1 - Y0) * (H - M.t - M.b); }
+
+  // Monotone cubic (Fritsch-Carlson): smooth, but never overshoots a data point.
+  function smooth(pts) {
+    var n = pts.length;
+    if (n < 2) return "";
+    var p = pts.map(function (d) { return [sx(d[0]), sy(d[1])]; });
+    var i, dx = [], s = [], m = [];
+    for (i = 0; i < n - 1; i++) { dx[i] = p[i + 1][0] - p[i][0]; s[i] = (p[i + 1][1] - p[i][1]) / dx[i]; }
+    m[0] = s[0]; m[n - 1] = s[n - 2];
+    for (i = 1; i < n - 1; i++) m[i] = (s[i - 1] * s[i] <= 0) ? 0 : (s[i - 1] + s[i]) / 2;
+    for (i = 0; i < n - 1; i++) {
+      if (s[i] === 0) { m[i] = 0; m[i + 1] = 0; continue; }
+      var a = m[i] / s[i], b = m[i + 1] / s[i], h = Math.sqrt(a * a + b * b);
+      if (h > 3) { var t = 3 / h; m[i] = t * a * s[i]; m[i + 1] = t * b * s[i]; }
+    }
+    var d = "M" + p[0][0].toFixed(2) + "," + p[0][1].toFixed(2);
+    for (i = 0; i < n - 1; i++) {
+      var w = dx[i] / 3;
+      d += "C" + (p[i][0] + w).toFixed(2) + "," + (p[i][1] + m[i] * w).toFixed(2) +
+           " " + (p[i + 1][0] - w).toFixed(2) + "," + (p[i + 1][1] - m[i + 1] * w).toFixed(2) +
+           " " + p[i + 1][0].toFixed(2) + "," + p[i + 1][1].toFixed(2);
+    }
+    return d;
+  }
+
+  function svgEl(n, attrs) {
+    var e = document.createElementNS("http://www.w3.org/2000/svg", n);
+    for (var k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  var gridG = document.getElementById("gridG");
+  var axisG = document.getElementById("axisG");
+  var stationsG = document.getElementById("stationsG");
+  var svgRoot = document.getElementById("chart");
+  var stationNodes = [];
+
+  function buildChart() {
+    setGeometry();
+    svgRoot.setAttribute("viewBox", "0 0 " + W + " " + H);
+    document.getElementById("revealRect").setAttribute("height", H);
+    gridG.textContent = ""; axisG.textContent = ""; stationsG.textContent = "";
+
+    var narrow = W < 700;
+    var yTicks = narrow ? [18, 21, 24] : [18, 20, 22, 24, 26];
+    var xTicks = narrow ? [2005, 2015, 2025, 2035] : [2005, 2010, 2015, 2020, 2025, 2030, 2035];
+
+    yTicks.forEach(function (v) {
+      gridG.appendChild(svgEl("line", { x1: M.l, x2: W - M.r, y1: sy(v), y2: sy(v), stroke: "var(--grid)", "stroke-width": 1 }));
+      var t = svgEl("text", { x: M.l - 7, y: sy(v) + 4, "font-size": FS, "text-anchor": "end" });
+      t.textContent = v;
+      axisG.appendChild(t);
+    });
+
+    xTicks.forEach(function (y) {
+      var t = svgEl("text", { x: sx(y), y: H - 12, "font-size": FS, "text-anchor": "middle" });
+      t.textContent = y;
+      axisG.appendChild(t);
+    });
+
+    gridG.appendChild(svgEl("line", {
+      x1: sx(2026), x2: sx(2026), y1: M.t - 4, y2: H - M.b,
+      stroke: "var(--grid)", "stroke-width": 1.5, "stroke-dasharray": "3 4"
+    }));
+    var dlab = svgEl("text", { x: sx(2026) + 6, y: M.t + 9, "font-size": FS - 1.5, "letter-spacing": ".1em" });
+    dlab.textContent = narrow ? "PLAN →" : "PLAN PERIOD →";
+    gridG.appendChild(dlab);
+
+    document.getElementById("targetLine").setAttribute("d", "M" + sx(X0) + "," + sy(TARGET) + "L" + sx(X1) + "," + sy(TARGET));
+    var tl = document.getElementById("targetLab");
+    tl.setAttribute("x", sx(X0) + 5);
+    tl.setAttribute("y", sy(TARGET) - 7);
+    tl.setAttribute("font-size", FS - 1);
+    tl.textContent = narrow ? "STATE TARGET · 19% BELOW 2005" : "STATE TARGET · 19% BELOW 2005 (21.1 LBS)";
+
+    document.getElementById("histPath").setAttribute("d", smooth(history));
+    document.getElementById("bauPath").setAttribute("d", smooth(bau));
+    document.getElementById("planPath").setAttribute("d", smooth(plan));
+
+    var gapD = smooth(bau);
+    plan.slice().reverse().forEach(function (d) {
+      gapD += "L" + sx(d[0]).toFixed(2) + "," + sy(d[1]).toFixed(2);
+    });
+    gapD += "Z";
+    document.getElementById("gapArea").setAttribute("d", gapD);
+
+    var r = narrow ? 6 : 9;
+    stationNodes = stations.map(function (s) {
+      var g = svgEl("g", { opacity: 0 });
+      var cx = sx(s.y), cy = sy(valAt(plan, s.y));
+      g.appendChild(svgEl("circle", { cx: cx, cy: cy, r: r, fill: "var(--surface)", stroke: s.policy ? "var(--signal)" : "var(--teal)", "stroke-width": narrow ? 2.2 : 3 }));
+      g.appendChild(svgEl("circle", { cx: cx, cy: cy, r: narrow ? 2 : 3, fill: s.policy ? "var(--signal)" : "var(--teal)" }));
+      stationsG.appendChild(g);
+      return { g: g, year: s.y };
+    });
+
+    headLine.setAttribute("y1", M.t - 4);
+    headLine.setAttribute("y2", H - M.b);
+
+    // geometry changed, so invalidate the render caches and force a full repaint
+    pX = -1; pYear = -1; pPct = -1; stationOn = [];
+  }
+
+  function valAt(series, year) {
+    for (var i = 0; i < series.length - 1; i++) {
+      if (year >= series[i][0] && year <= series[i + 1][0]) {
+        var f = (year - series[i][0]) / (series[i + 1][0] - series[i][0]);
+        return series[i][1] + f * (series[i + 1][1] - series[i][1]);
+      }
+    }
+    return year < series[0][0] ? series[0][1] : series[series.length - 1][1];
+  }
+
+  /* ---------- playhead ---------- */
+  var headG = document.getElementById("headG");
+  var headLine = svgEl("line", { stroke: "var(--ink)", "stroke-width": 1.2, opacity: ".35" });
+  var headDotPlan = svgEl("circle", { r: 6, fill: "var(--teal)", stroke: "var(--surface)", "stroke-width": 2.5 });
+  var headDotBau = svgEl("circle", { r: 5, fill: "var(--amber)", stroke: "var(--surface)", "stroke-width": 2.5 });
+  headG.appendChild(headLine);
+  headG.appendChild(headDotBau);
+  headG.appendChild(headDotPlan);
+
+  /* ---------- counters ----------
+     Built once as text nodes. Writing textContent on a cached node is far cheaper
+     than re-parsing innerHTML, and every write is gated on the value changing. */
+  function mkCounter(id, unit) {
+    var el = document.getElementById(id);
+    el.textContent = "";
+    var n = document.createTextNode("");
+    el.appendChild(n);
+    if (unit) {
+      var u = document.createElement("span");
+      u.className = "u"; u.textContent = unit;
+      el.appendChild(u);
+    }
+    return n;
+  }
+  var n1 = mkCounter("c1"), n2 = mkCounter("c2"),
+      n3 = mkCounter("c3", "Mt"), n4 = mkCounter("c4", "%");
+  var p1, p2, p3, p4;
+
+  // Local formatter: avoids the cost of Intl on every frame.
+  function fmt(n) {
+    n = Math.round(n);
+    var s = String(n), out = "", c = 0;
+    for (var i = s.length - 1; i >= 0; i--) {
+      out = s.charAt(i) + out;
+      if (++c % 3 === 0 && i > 0) out = "," + out;
+    }
+    return out;
+  }
+
+  function counters(f) {
+    var s;
+    s = fmt(180000 + 970000 * Math.pow(f, 1.55)); if (s !== p1) { n1.nodeValue = s; p1 = s; }
+    s = fmt(12000 * Math.pow(f, 1.2));            if (s !== p2) { n2.nodeValue = s; p2 = s; }
+    s = (6.1 * Math.pow(f, 1.9)).toFixed(1);      if (s !== p3) { n3.nodeValue = s; p3 = s; }
+    s = String(Math.round(12 + 22 * Math.pow(f, 1.1))); if (s !== p4) { n4.nodeValue = s; p4 = s; }
+  }
+
+  /* ---------- render ---------- */
+  var scrub = document.getElementById("scrub");
+  var yearchip = document.getElementById("yearchip");
+  var revealRect = document.getElementById("revealRect");
+  var pX = -1, pYear = -1, pPct = -1, stationOn = [];
+
+  function render(year) {
+    // Round to whole units: sub-pixel changes cost a re-clip and buy nothing visible.
+    var x = Math.round(sx(year));
+
+    // Cheap per-frame work: only the geometry that actually moves.
+    if (x !== pX) {
+      pX = x;
+      revealRect.setAttribute("width", x > 0 ? x : 0);
+      headLine.setAttribute("x1", x); headLine.setAttribute("x2", x);
+      headDotPlan.setAttribute("cx", x);
+      headDotPlan.setAttribute("cy", Math.round(sy(valAt(plan, year)) * 10) / 10);
+      headDotBau.setAttribute("cx", x);
+      headDotBau.setAttribute("cy", Math.round(sy(valAt(bau, year)) * 10) / 10);
+    }
+
+    // Everything below is gated: it only touches the DOM when the value changes.
+    var yr = year | 0;
+    if (yr !== pYear) {
+      pYear = yr;
+      yearchip.textContent = yr;
+      for (var i = 0; i < stationNodes.length; i++) {
+        var on = year >= stationNodes[i].year;
+        if (stationOn[i] !== on) { stationNodes[i].g.setAttribute("opacity", on ? 1 : 0); stationOn[i] = on; }
+      }
+    }
+
+    var f = (year - 2026) / 10;
+    counters(f);
+
+    // The slider background is a gradient, so repainting it is not free.
+    // One update per whole percent is plenty.
+    var pct = Math.round(f * 100);
+    if (pct !== pPct) { pPct = pct; scrub.style.setProperty("--pct", pct + "%"); }
+  }
+
+  scrub.addEventListener("input", function () {
+    stop();
+    render(parseFloat(scrub.value));
+  });
+
+  /* ---------- playback ----------
+     requestAnimationFrame keeps the animation in step with the compositor.
+     If rAF never fires (some embedded viewers throttle it), fall back to a timer. */
+  var playing = false, rafId = null, timer = null, probe = null;
+  var lastT = 0, originT = 0, originY = 2026, rafSeen = false;
+  var SPEED = 1.6;                       // years per second of real time
+  var playicon = document.getElementById("playicon");
+  var PLAY = "M8 5v14l11-7z", PAUSE = "M6 5h4v14H6zM14 5h4v14h-4z";
+  var now = function () { return (window.performance && performance.now) ? performance.now() : Date.now(); };
+  var hasRaf = typeof window.requestAnimationFrame === "function";
+
+  /* Position is derived from elapsed wall-clock time, not accumulated per-frame
+     deltas. A slow or dropped frame then costs smoothness but never speed, so the
+     run always takes the same number of seconds. A gap over one second means the
+     tab was backgrounded, so rebase instead of lurching forward. */
+  function advance() {
+    var t = now();
+    if (t - lastT > 1000) originT += (t - lastT);
+    lastT = t;
+    var y = originY + ((t - originT) / 1000) * SPEED;
+    if (y >= 2036) { scrub.value = 2036; render(2036); stop(); return false; }
+    scrub.value = y; render(y);
+    return true;
+  }
+  function frame() {
+    rafSeen = true;
+    if (!playing) return;
+    if (advance()) rafId = window.requestAnimationFrame(frame);
+  }
+  function start() {
+    if (parseFloat(scrub.value) >= 2035.98) { scrub.value = 2026; render(2026); }
+    playing = true; rafSeen = false;
+    originY = parseFloat(scrub.value);   // resume from wherever the scrubber sits
+    originT = lastT = now();
+    playicon.firstElementChild.setAttribute("d", PAUSE);
+    document.getElementById("playbtn").setAttribute("aria-label", "Pause the plan timeline");
+    if (hasRaf) {
+      rafId = window.requestAnimationFrame(frame);
+      probe = setTimeout(function () {
+        if (playing && !rafSeen && !timer) { lastT = now(); timer = setInterval(advance, 33); }
+      }, 300);
+    } else {
+      timer = setInterval(advance, 33);
+    }
+  }
+  function stop() {
+    playing = false;
+    if (rafId && hasRaf) window.cancelAnimationFrame(rafId);
+    if (timer) clearInterval(timer);
+    if (probe) clearTimeout(probe);
+    rafId = null; timer = null; probe = null;
+    playicon.firstElementChild.setAttribute("d", PLAY);
+    document.getElementById("playbtn").setAttribute("aria-label", "Play the plan timeline");
+  }
+  document.getElementById("playbtn").addEventListener("click", function () {
+    playing ? stop() : start();
+  });
+
+  buildChart();
+  render(2026);
+
+  var rt = null;
+  window.addEventListener("resize", function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () {
+      buildChart();
+      render(parseFloat(scrub.value));
+    }, 180);
+  });
+
+  /* ---------- inventory bars ---------- */
+  var barsEl = document.getElementById("bars");
+  inventory.forEach(function (row) {
+    var d = document.createElement("div");
+    d.className = "bar-row" + (row[2] ? " hi" : "");
+    d.innerHTML =
+      '<div class="bar-lab">' + row[0] + '</div>' +
+      '<div class="bar-track"><div class="bar-fill" data-w="' + (row[1] / 41 * 100) + '" style="background:' +
+        (row[2] ? "var(--amber)" : "var(--muted)") + ';opacity:' + (row[2] ? 1 : .45) + '"></div></div>' +
+      '<div class="bar-val">' + row[1] + '%</div>';
+    barsEl.appendChild(d);
+  });
+
+  /* ---------- route ---------- */
+  var routeEl = document.getElementById("route");
+  stations.forEach(function (s) {
+    var d = document.createElement("div");
+    d.className = "stop" + (s.policy ? " policy" : "");
+    d.innerHTML =
+      '<div class="stop-year">' + s.y + '</div>' +
+      '<div class="stop-t">' + s.t + (s.policy ? '<span class="pill">Adopted policy</span>' : '') + '</div>' +
+      '<p class="stop-d">' + s.d + '</p>';
+    routeEl.appendChild(d);
+  });
+
+  /* ---------- schematic map ---------- */
+  var P = {
+    delMar:[190,130], utc:[214,196], sorrento:[254,180], oldTown:[252,358],
+    missionValley:[292,306], kearnyMesa:[340,264], cityHeights:[346,356],
+    sdsu:[388,322], santee:[472,290], elCajon:[498,352], lemonGrove:[404,398],
+    downtown:[258,414], loganHeights:[316,422], barrioLogan:[282,452],
+    encanto:[356,432], nationalCity:[296,482], chulaVista:[322,520],
+    sanYsidro:[300,582], otayMesa:[402,570]
+  };
+
+  var coast = [[152,0],[164,64],[178,128],[190,182],[198,232],[208,276],[218,320],[228,360],[238,396],[248,430],[254,462],[260,496],[270,532],[282,568],[292,606],[300,640]];
+  var freeways = [
+    { n:"5",   pts:[[168,10],[182,90],[196,166],[212,242],[230,322],[246,394],[260,432],[274,480],[286,528],[296,584]] },
+    { n:"805", pts:[[224,192],[254,258],[288,322],[314,384],[324,442],[324,496],[310,550],[300,584]] },
+    { n:"15",  pts:[[352,10],[350,96],[346,182],[342,264],[336,332],[326,392],[308,426]] },
+    { n:"8",   bi:4, pts:[[200,318],[252,312],[312,310],[382,316],[452,326],[510,338]] },
+    { n:"94",  bi:4, pts:[[270,428],[322,420],[380,406],[442,388],[494,372]] },
+    { n:"52",  pts:[[232,232],[302,234],[374,240],[446,258]] }
+  ];
+
+  var linesToday = [
+    { c:"#3B7FD4", pts:["utc","sorrento","oldTown","downtown","nationalCity","chulaVista","sanYsidro"] },
+    { c:"#E2892F", pts:["downtown","loganHeights","encanto","lemonGrove","elCajon"] },
+    { c:"#4FA85C", pts:["downtown","oldTown","missionValley","sdsu","santee"] }
+  ];
+  var linesFuture = [
+    { c:"var(--teal)", pts:["cityHeights","kearnyMesa","sorrento"] },
+    { c:"var(--teal)", pts:["chulaVista","otayMesa"] },
+    { c:"var(--teal)", pts:["barrioLogan","encanto","cityHeights"] }
+  ];
+
+  var hoods = [
+    { k:"barrioLogan", n:"Barrio Logan", lx:-13, ly:12, la:"end", t:"Wedged between Interstate 5, the Coronado Bridge ramps, and the working waterfront. One of the most frequently cited environmental justice communities in California, and the origin of decades of community organizing over land use and air quality." },
+    { k:"loganHeights", n:"Logan Heights", lx:0, ly:-14, la:"middle", t:"Cut through by freeway construction in the mid twentieth century. Sits inside the same freeway and port corridor as Barrio Logan, and carries similar exposure to diesel traffic." },
+    { k:"nationalCity", n:"National City", lx:13, ly:5, t:"Bordered by Interstate 5 and the harbor, with truck routes running through residential blocks. The city's own leadership pushed back on the regional mileage charge on the grounds that transit alternatives were not there yet." },
+    { k:"sanYsidro", n:"San Ysidro", lx:13, ly:5, t:"Sits at one of the busiest land border crossings in the world. Vehicles idling in crossing queues concentrate emissions directly against homes and schools." },
+    { k:"cityHeights", n:"City Heights", lx:13, ly:5, t:"Dense and low income, with Interstate 15 running straight through it. High transit ridership relative to the region, but service frequency has not matched the demand." },
+    { k:"encanto", n:"Encanto and Southeastern San Diego", lx:13, ly:10, t:"Along Chollas Creek, the city's most polluted waterway. This is where UC San Diego's EarthLab Community Station operates as a neighborhood scale environmental classroom." },
+    { k:"otayMesa", n:"Otay Mesa", lx:13, ly:5, t:"Freight corridor for the commercial port of entry. Heavy duty trucks, which produce 7 percent of regional emissions, concentrate here rather than spreading across the region." }
+  ];
+  var centers = [
+    { k:"downtown", n:"Downtown", lx:-11, la:"end" }, { k:"sorrento", n:"Sorrento Valley", lx:11 },
+    { k:"kearnyMesa", n:"Kearny Mesa", lx:11 }, { k:"utc", n:"UTC", lx:-11, la:"end" }
+  ];
+
+  var mapSvg = document.getElementById("map");
+  var view = "today";
+
+  function mEl(n, a) {
+    var e = document.createElementNS("http://www.w3.org/2000/svg", n);
+    for (var k in a) e.setAttribute(k, a[k]);
+    return e;
+  }
+  function poly(pts) { return pts.map(function (p) { return p[0] + "," + p[1]; }).join(" "); }
+  function keysToPts(ks) { return ks.map(function (k) { return P[k]; }); }
+
+  function drawMap() {
+    mapSvg.textContent = "";
+    var future = view === "future";
+
+    // ocean
+    var ocean = [[0,0]].concat(coast).concat([[0,640]]);
+    mapSvg.appendChild(mEl("polygon", { points: poly(ocean), fill: "var(--teal)", opacity: ".07" }));
+    mapSvg.appendChild(mEl("polyline", { points: poly(coast), fill: "none", stroke: "var(--teal)", "stroke-width": 1.5, opacity: ".35" }));
+    // bay
+    mapSvg.appendChild(mEl("polygon", {
+      points: poly([[250,404],[268,432],[282,470],[292,510],[286,540],[272,506],[258,466],[246,430]]),
+      fill: "var(--teal)", opacity: ".10"
+    }));
+
+    // freeways
+    freeways.forEach(function (f) {
+      mapSvg.appendChild(mEl("polyline", { points: poly(f.pts), fill: "none", stroke: "var(--amber)", "stroke-width": 3.2, opacity: ".38", "stroke-linecap": "round", "stroke-linejoin": "round" }));
+      var mid = f.pts[f.bi != null ? f.bi : Math.floor(f.pts.length / 2)];
+      var badge = mEl("g", { opacity: ".7" });
+      badge.appendChild(mEl("rect", { x: mid[0] - 11, y: mid[1] - 9, width: 22, height: 15, rx: 3, fill: "var(--surface)", stroke: "var(--amber)", "stroke-width": 1, opacity: ".9" }));
+      var bt = mEl("text", { x: mid[0], y: mid[1] + 2, "font-size": 10, "text-anchor": "middle", fill: "var(--amber)" });
+      bt.textContent = f.n;
+      badge.appendChild(bt);
+      mapSvg.appendChild(badge);
+    });
+
+    // transit access buffers
+    var buf = [];
+    linesToday.forEach(function (l) { buf = buf.concat(keysToPts(l.pts)); });
+    if (future) linesFuture.forEach(function (l) { buf = buf.concat(keysToPts(l.pts)); });
+    buf.forEach(function (p) {
+      mapSvg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: future ? 30 : 24, fill: "var(--teal)", opacity: future ? ".16" : ".13" }));
+    });
+
+    // transit lines
+    linesToday.forEach(function (l) {
+      mapSvg.appendChild(mEl("polyline", { points: poly(keysToPts(l.pts)), fill: "none", stroke: l.c, "stroke-width": 4, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: ".9" }));
+    });
+    if (future) {
+      linesFuture.forEach(function (l) {
+        mapSvg.appendChild(mEl("polyline", { points: poly(keysToPts(l.pts)), fill: "none", stroke: l.c, "stroke-width": 4.5, "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": "9 6" }));
+      });
+    }
+
+    // stations
+    buf.forEach(function (p) {
+      mapSvg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 3.4, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 1.4, opacity: ".55" }));
+    });
+
+    // chargers appear only in the future view
+    if (future) {
+      hoods.forEach(function (h) {
+        var c = P[h.k];
+        [[-13,-11],[12,-13],[15,10],[-14,11],[0,17]].forEach(function (o) {
+          mapSvg.appendChild(mEl("rect", { x: c[0] + o[0] - 2.6, y: c[1] + o[1] - 2.6, width: 5.2, height: 5.2, rx: 1.2, fill: "var(--teal)", opacity: ".85" }));
+        });
+      });
+    }
+
+    // employment centers
+    centers.forEach(function (c) {
+      var p = P[c.k];
+      mapSvg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 6, fill: "var(--muted)", opacity: ".75" }));
+      var t = mEl("text", { x: p[0] + (c.lx || 11), y: p[1] + 4, "font-size": 11.5, "text-anchor": c.la || "start" });
+      t.textContent = c.n;
+      mapSvg.appendChild(t);
+    });
+
+    // burden neighborhoods
+    hoods.forEach(function (h) {
+      var p = P[h.k];
+      var g = mEl("g", { "class": "hood", tabindex: "0", role: "button" });
+      g.setAttribute("aria-label", h.n);
+      g.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 11, fill: "var(--signal)", opacity: ".16" }));
+      g.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 6.5, fill: "var(--signal)" }));
+      var lab = mEl("text", { x: p[0] + (h.lx || 12), y: p[1] + (h.ly || 4), "font-size": 11.5, fill: "var(--ink)", "text-anchor": h.la || "start" });
+      lab.textContent = h.n.length > 18 ? h.n.split(" and ")[0] : h.n;
+      g.appendChild(lab);
+      function show() {
+        document.getElementById("miTag").textContent = "High burden neighborhood";
+        document.getElementById("miTag").className = "mi-tag";
+        document.getElementById("miName").textContent = h.n;
+        document.getElementById("miBody").textContent = h.t;
+      }
+      g.addEventListener("mouseenter", show);
+      g.addEventListener("focus", show);
+      g.addEventListener("click", show);
+      mapSvg.appendChild(g);
+    });
+
+    // context labels
+    [["missionValley","Mission Valley",-11,4],["sdsu","SDSU",11,4],["santee","Santee",11,4],
+     ["elCajon","El Cajon",11,4],["lemonGrove","Lemon Grove",11,14],["chulaVista","Chula Vista",13,5],
+     ["oldTown","Old Town",-11,4],["delMar","Del Mar",11,4]].forEach(function (c) {
+      var p = P[c[0]];
+      var t = mEl("text", { x: p[0] + c[2], y: p[1] + c[3], "font-size": 10.5, opacity: ".7", "text-anchor": c[2] < 0 ? "end" : "start" });
+      t.textContent = c[1];
+      mapSvg.appendChild(t);
+    });
+
+    // border
+    mapSvg.appendChild(mEl("line", { x1: 254, y1: 600, x2: 476, y2: 600, stroke: "var(--muted)", "stroke-width": 1.4, "stroke-dasharray": "5 4", opacity: ".6" }));
+    var bl = mEl("text", { x: 366, y: 616, "font-size": 10.5, "text-anchor": "middle", "letter-spacing": ".1em" });
+    bl.textContent = "MEXICO";
+    mapSvg.appendChild(bl);
+
+    var ol = mEl("text", { x: 40, y: 96, "font-size": 11, "letter-spacing": ".14em" });
+    ol.textContent = "PACIFIC";
+    mapSvg.appendChild(ol);
+
+    document.getElementById("ms1").innerHTML = future ? '34<span class="u">%</span>' : '12<span class="u">%</span>';
+    document.getElementById("ms2").innerHTML = future ? '7<span class="u">of 7</span>' : '3<span class="u">of 7</span>';
+    document.getElementById("ms3").textContent = future ? "12,000" : "0";
+  }
+
+  Array.prototype.forEach.call(document.querySelectorAll(".map-toggle button"), function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll(".map-toggle button"), function (x) { x.classList.remove("on"); });
+      b.classList.add("on");
+      view = b.getAttribute("data-view");
+      drawMap();
+      var tag = document.getElementById("miTag");
+      if (view === "future") {
+        tag.textContent = "2036 with plan"; tag.className = "mi-tag ok";
+        document.getElementById("miName").textContent = "Coverage closes";
+        document.getElementById("miBody").textContent = "New transit corridors reach City Heights, Barrio Logan, Encanto, and Otay Mesa. Charging is sited by the published equity map rather than by market demand, which puts it in the multifamily neighborhoods that private investment skips.";
+      } else {
+        tag.textContent = "Select a neighborhood"; tag.className = "mi-tag";
+        document.getElementById("miName").textContent = "San Diego region";
+        document.getElementById("miBody").textContent = "Seven neighborhoods on this map carry the region's heaviest transportation pollution burden. Every one of them sits against a freeway, a port, or a border crossing. Tap any red marker to read why.";
+      }
+    });
+  });
+
+  drawMap();
+
+  /* ---------- reveal on scroll ---------- */
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("in");
+      e.target.querySelectorAll(".bar-fill").forEach(function (f) {
+        f.style.width = f.getAttribute("data-w") + "%";
+      });
+      io.unobserve(e.target);
+    });
+  }, { threshold: .12 });
+  document.querySelectorAll(".reveal").forEach(function (el) { io.observe(el); });
+})();
+</script>
+</body>
+</html>
