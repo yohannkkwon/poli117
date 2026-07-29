@@ -323,60 +323,64 @@
   a:hover { border-bottom-color: var(--teal); }
   a:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
-  /* ---------- map ---------- */
-  .map-card { overflow: hidden; }
-  .map-head {
-    display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; justify-content: space-between;
-    padding: 18px 22px; border-bottom: 1px solid var(--line-soft);
+  /* ---------- build-out maps ---------- */
+  .dual-card { overflow: hidden; }
+  .dual-controls {
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    padding: 16px 22px; border-bottom: 1px solid var(--line-soft);
   }
-  .map-toggle { display: inline-flex; background: var(--surface-2); border: 1px solid var(--line); border-radius: 999px; padding: 3px; gap: 2px; }
-  .map-toggle button {
-    font-family: var(--mono); font-size: .72rem; letter-spacing: .08em; text-transform: uppercase;
-    border: none; background: transparent; color: var(--muted); cursor: pointer;
-    padding: 8px 15px; border-radius: 999px; white-space: nowrap;
+  .dual-phase {
+    font-family: var(--mono); font-size: .68rem; letter-spacing: .11em; text-transform: uppercase;
+    color: var(--teal); margin-left: auto; text-align: right; white-space: nowrap;
   }
-  .map-toggle button.on { background: var(--teal); color: var(--ground); font-weight: 600; }
-  .map-toggle button:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
-  .map-legend { display: flex; flex-wrap: wrap; gap: 7px 16px; font-family: var(--mono); font-size: .68rem; color: var(--ink-2); letter-spacing: .03em; }
-  .map-legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
-  .lg-dot { width: 10px; height: 10px; border-radius: 50%; flex: none; }
+  .dual-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--line-soft); }
+  @media (max-width: 880px) { .dual-grid { grid-template-columns: 1fr; } }
+  .dual-pane { background: var(--surface); display: flex; flex-direction: column; min-width: 0; }
+  .dual-head { padding: 18px 20px 12px; }
+  .dual-title {
+    font-size: 1rem; font-weight: 700; letter-spacing: -.012em; margin: 0 0 5px;
+    display: flex; align-items: center; gap: 9px; color: var(--ink);
+  }
+  .dual-sub { font-family: var(--mono); font-size: .67rem; color: var(--muted); letter-spacing: .05em; margin: 0; }
+  .dual-body { padding: 0 6px; contain: layout paint; }
+  /* Cap the height so a wide column does not blow the map up; the viewBox
+     letterboxes and stays centred. */
+  svg.dual { display: block; width: 100%; height: auto; max-height: 620px; }
+  @media (max-width: 880px) { svg.dual { max-height: 460px; } }
+  svg.dual text { font-family: var(--mono); fill: var(--muted); }
+
+  /* The year-to-year animation is done with CSS transitions, so stepping the
+     scrubber costs no per-frame JavaScript. */
+  svg.dual .grow { transition: r .7s cubic-bezier(.22,1,.36,1); }
+  svg.dual .pop {
+    transition: opacity .45s ease, transform .5s cubic-bezier(.34,1.56,.64,1);
+    transform-box: fill-box; transform-origin: center;
+  }
+  svg.dual .corr { transition: opacity .6s ease; }
+
+  .dual-legend {
+    display: flex; flex-wrap: wrap; gap: 6px 15px; padding: 10px 20px 14px;
+    font-family: var(--mono); font-size: .65rem; color: var(--ink-2); letter-spacing: .03em;
+  }
+  .dual-legend span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+  .lg-dot { width: 9px; height: 9px; border-radius: 50%; flex: none; }
   .lg-line { width: 15px; height: 3px; border-radius: 2px; flex: none; }
 
-  .map-layout { display: grid; grid-template-columns: 1fr 286px; }
-  @media (max-width: 900px) { .map-layout { grid-template-columns: 1fr; } }
-  .map-body { padding: 6px 4px 0; min-width: 0; overflow-x: auto; }
-  svg.map { display: block; width: 100%; height: auto; }
-  @media (max-width: 760px) {
-    svg.map { min-width: 620px; }
-    .map-body::after {
-      content: "Scroll the map sideways to see the full region";
-      display: block; font-family: var(--mono); font-size: .66rem; color: var(--muted);
-      letter-spacing: .04em; padding: 2px 8px 10px; position: sticky; left: 0;
-    }
+  .dual-stats {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: auto;
+    background: var(--line-soft); border-top: 1px solid var(--line-soft);
   }
-  svg.map text { font-family: var(--mono); fill: var(--muted); }
-  svg.map .hood { cursor: pointer; }
-  svg.map .hood:focus { outline: none; }
-  svg.map .hood:focus-visible circle:first-child { stroke: var(--ink); stroke-width: 2.5; }
-
-  .map-info {
-    border-left: 1px solid var(--line-soft); padding: 22px 22px 24px;
-    display: flex; flex-direction: column; gap: 10px;
+  .dstat { background: var(--surface); padding: 14px 18px 16px; }
+  .dstat b {
+    display: block; font-family: var(--mono); font-variant-numeric: tabular-nums;
+    font-size: 1.42rem; font-weight: 600; letter-spacing: -.025em; color: var(--ink); line-height: 1.1;
   }
-  @media (max-width: 900px) { .map-info { border-left: none; border-top: 1px solid var(--line-soft); } }
-  .mi-tag { font-family: var(--mono); font-size: .66rem; letter-spacing: .13em; text-transform: uppercase; color: var(--signal); }
-  .mi-tag.ok { color: var(--teal); }
-  .mi-name { font-size: 1.15rem; font-weight: 750; letter-spacing: -.02em; line-height: 1.15; }
-  .mi-body { font-size: .88rem; color: var(--ink-2); line-height: 1.5; margin: 0; }
-  .mi-hint { font-family: var(--mono); font-size: .68rem; color: var(--muted); letter-spacing: .04em; margin-top: auto; padding-top: 12px; }
+  .dstat b .u { font-size: .58em; color: var(--muted); margin-left: 2px; }
+  .dstat em { display: block; font-style: normal; font-size: .75rem; color: var(--muted); margin-top: 5px; line-height: 1.35; }
 
-  .map-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line-soft); border-top: 1px solid var(--line-soft); }
-  @media (max-width: 620px) { .map-stats { grid-template-columns: 1fr; } }
-  .map-stat { background: var(--surface); padding: 15px 20px 17px; }
-  .ms-v { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.5rem; font-weight: 600; letter-spacing: -.025em; color: var(--ink); line-height: 1.1; }
-  .ms-v .u { font-size: .6em; color: var(--muted); margin-left: 2px; }
-  .ms-l { font-size: .76rem; color: var(--muted); margin-top: 5px; line-height: 1.35; }
-
+  @media (prefers-reduced-motion: reduce) {
+    svg.dual .grow, svg.dual .pop, svg.dual .corr { transition: none; }
+  }
   .reveal { opacity: 0; transform: translateY(14px); transition: opacity .7s ease, transform .7s cubic-bezier(.22,1,.36,1); }
   .reveal.in { opacity: 1; transform: none; }
 
@@ -536,49 +540,59 @@
   <section class="band reveal">
     <div class="sec-head">
       <p class="eyebrow">Where it lands</p>
-      <h2>The gap has an address.</h2>
-      <p>Transit access in San Diego is not spread evenly across the region. It runs in a few corridors, and the neighborhoods carrying the heaviest pollution burden are largely not on them. Switch the map to 2036 to see where this plan puts new transit and new charging.</p>
+      <h2>Watch it get built.</h2>
+      <p>Drag the year, or press play. On the left, charging fills in, priority communities first. On the right, the shaded areas are the parts of the region within a half mile of frequent transit, and they spread as new corridors open. Both maps run on the same clock as the plan.</p>
     </div>
 
-    <div class="card map-card">
-      <div class="map-head">
-        <div class="map-toggle" role="group" aria-label="Map time period">
-          <button type="button" data-view="today" class="on">Today</button>
-          <button type="button" data-view="future">2036 with plan</button>
+    <div class="card dual-card">
+      <div class="dual-controls">
+        <button class="playbtn" id="mplay" type="button" aria-label="Play the build-out">
+          <svg id="micon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+        </button>
+        <div class="scrub">
+          <input type="range" id="mscrub" min="2026" max="2036" step="1" value="2026" aria-label="Build-out year">
+          <span class="yearchip" id="myear">2026</span>
         </div>
-        <div class="map-legend">
-          <span><i class="lg-dot" style="background:var(--signal)"></i>High burden</span>
-          <span><i class="lg-dot" style="background:var(--muted)"></i>Employment center</span>
-          <span><i class="lg-line" style="background:var(--teal)"></i>Transit</span>
-          <span><i class="lg-line" style="background:var(--amber);opacity:.55"></i>Freeway</span>
-          <span><i class="lg-dot" style="background:var(--teal);opacity:.28"></i>½ mile of transit</span>
-        </div>
+        <div class="dual-phase" id="mphase">Planning year</div>
       </div>
 
-      <div class="map-layout">
-        <div class="map-body">
-          <svg class="map" id="map" viewBox="0 0 780 640" role="img" aria-label="Schematic map of the San Diego metropolitan area showing freeway corridors, transit lines, half-mile transit access areas, and the neighborhoods carrying the highest pollution burden."></svg>
+      <div class="dual-grid">
+        <div class="dual-pane">
+          <div class="dual-head">
+            <p class="dual-title"><i class="lg-dot" style="background:var(--teal)"></i>Charging network</p>
+            <p class="dual-sub">EACH MARK IS ABOUT 100 PUBLIC CHARGERS</p>
+          </div>
+          <div class="dual-body">
+            <svg class="dual" id="mapChg" viewBox="145 95 385 535" role="img" aria-label="Schematic map of San Diego showing public charging stations appearing year by year, beginning in the highest pollution burden neighborhoods and later spreading regionwide."></svg>
+          </div>
+          <div class="dual-legend">
+            <span><i class="lg-dot" style="background:var(--teal)"></i>Priority community</span>
+            <span><i class="lg-dot" style="background:var(--muted)"></i>Regionwide</span>
+            <span><i class="lg-line" style="background:var(--amber);opacity:.5"></i>Freeway</span>
+          </div>
+          <div class="dual-stats">
+            <div class="dstat"><b id="chgN">0</b><em>chargers installed</em></div>
+            <div class="dstat"><b id="chgP">0<span class="u">%</span></b><em>sited in priority communities</em></div>
+          </div>
         </div>
-        <div class="map-info">
-          <div class="mi-tag" id="miTag">Select a neighborhood</div>
-          <div class="mi-name" id="miName">San Diego region</div>
-          <p class="mi-body" id="miBody">Seven neighborhoods on this map carry the region's heaviest transportation pollution burden. Every one of them sits against a freeway, a port, or a border crossing. Tap any red marker to read why.</p>
-          <div class="mi-hint" id="miHint">Schematic map. Distances distorted for legibility.</div>
-        </div>
-      </div>
 
-      <div class="map-stats">
-        <div class="map-stat">
-          <div class="ms-v" id="ms1">12<span class="u">%</span></div>
-          <div class="ms-l">Low-income residents within ½ mile of frequent transit</div>
-        </div>
-        <div class="map-stat">
-          <div class="ms-v" id="ms2">3<span class="u">of 7</span></div>
-          <div class="ms-l">High-burden neighborhoods served by frequent transit</div>
-        </div>
-        <div class="map-stat">
-          <div class="ms-v" id="ms3">0</div>
-          <div class="ms-l">Public chargers sited by equity map</div>
+        <div class="dual-pane">
+          <div class="dual-head">
+            <p class="dual-title"><i class="lg-dot" style="background:var(--teal);opacity:.45"></i>Frequent transit reach</p>
+            <p class="dual-sub">AREA WITHIN A HALF MILE OF FREQUENT SERVICE</p>
+          </div>
+          <div class="dual-body">
+            <svg class="dual" id="mapTrn" viewBox="145 95 385 535" role="img" aria-label="Schematic map of San Diego showing the area within a half mile of frequent transit expanding year by year as new corridors open."></svg>
+          </div>
+          <div class="dual-legend">
+            <span><i class="lg-line" style="background:var(--teal)"></i>In service</span>
+            <span><i class="lg-line" style="background:var(--teal);opacity:.35"></i>Opens later</span>
+            <span><i class="lg-dot" style="background:var(--signal)"></i>High burden</span>
+          </div>
+          <div class="dual-stats">
+            <div class="dstat"><b id="trnP">12<span class="u">%</span></b><em>of low-income residents within reach</em></div>
+            <div class="dstat"><b id="trnC">3</b><em>frequent corridors in service</em></div>
+          </div>
         </div>
       </div>
     </div>
@@ -648,7 +662,10 @@
           <tr><td>Counters (vehicles, chargers, CO₂)</td><td>See chart</td><td><span class="tag model">Modeled</span></td><td>Derived from the two paths above; illustrative of scale, not forecasts</td></tr>
           <tr><td>Map: freeways, trolley lines, neighborhoods</td><td>Positions on the map</td><td><span class="tag real">Reported</span></td><td>Real corridors and Metropolitan Transit System lines, drawn schematically. Distances are distorted for legibility, as on any transit diagram</td></tr>
           <tr><td>Map: high burden neighborhoods</td><td>Seven marked</td><td><span class="tag real">Reported</span></td><td>Communities identified as disadvantaged in CalEnviroScreen and in SANDAG social equity analysis</td></tr>
-          <tr><td>Map: 2036 corridors and chargers</td><td>Dashed lines and charger marks</td><td><span class="tag model">Modeled</span></td><td>This plan's proposed siting. Not adopted projects, and placement is illustrative rather than engineered</td></tr>
+          <tr><td>Map: charger roll-out by year</td><td>0 to 12,000 marks</td><td><span class="tag model">Modeled</span></td><td>This plan's proposed phasing. Each mark stands for about 100 chargers, and positions are scattered within a neighbourhood rather than sited at real addresses</td></tr>
+          <tr><td>Map: priority share of chargers</td><td>100% falling to 57%</td><td><span class="tag model">Modeled</span></td><td>Reflects building priority communities out first. The end state stays well above the 35% state and 40% federal floors</td></tr>
+          <tr><td>Map: corridor opening years</td><td>2030, 2032, 2034</td><td><span class="tag model">Modeled</span></td><td>Proposed sequencing, not adopted projects. The three lines shown in service from the start are the existing trolley network</td></tr>
+          <tr><td>Map: transit reach areas</td><td>12% growing to 34%</td><td><span class="tag model">Modeled</span></td><td>Half-mile areas drawn schematically around stations. The 12% starting value is reported by SANDAG; growth is projected</td></tr>
           <tr><td>Historical path, 2005 to 2025</td><td>Curve shown in grey</td><td><span class="tag model">Modeled</span></td><td>Interpolated between reported benchmark years; reflects the post-2013 rebound in driving</td></tr>
         </tbody>
       </table>
@@ -1036,7 +1053,7 @@
     routeEl.appendChild(d);
   });
 
-  /* ---------- schematic map ---------- */
+  /* ---------- build-out maps ---------- */
   var P = {
     delMar:[190,130], utc:[214,196], sorrento:[254,180], oldTown:[252,358],
     missionValley:[292,306], kearnyMesa:[340,264], cityHeights:[346,356],
@@ -1048,41 +1065,49 @@
 
   var coast = [[152,0],[164,64],[178,128],[190,182],[198,232],[208,276],[218,320],[228,360],[238,396],[248,430],[254,462],[260,496],[270,532],[282,568],[292,606],[300,640]];
   var freeways = [
-    { n:"5",   pts:[[168,10],[182,90],[196,166],[212,242],[230,322],[246,394],[260,432],[274,480],[286,528],[296,584]] },
-    { n:"805", pts:[[224,192],[254,258],[288,322],[314,384],[324,442],[324,496],[310,550],[300,584]] },
-    { n:"15",  pts:[[352,10],[350,96],[346,182],[342,264],[336,332],[326,392],[308,426]] },
+    { n:"5",   bi:5, pts:[[168,10],[182,90],[196,166],[212,242],[230,322],[246,394],[260,432],[274,480],[286,528],[296,584]] },
+    { n:"805", bi:2, pts:[[224,192],[254,258],[288,322],[314,384],[324,442],[324,496],[310,550],[300,584]] },
+    { n:"15",  bi:4, pts:[[352,10],[350,96],[346,182],[342,264],[336,332],[326,392],[308,426]] },
     { n:"8",   bi:4, pts:[[200,318],[252,312],[312,310],[382,316],[452,326],[510,338]] },
     { n:"94",  bi:4, pts:[[270,428],[322,420],[380,406],[442,388],[494,372]] },
-    { n:"52",  pts:[[232,232],[302,234],[374,240],[446,258]] }
+    { n:"52",  bi:2, pts:[[232,232],[302,234],[374,240],[446,258]] }
   ];
 
-  var linesToday = [
-    { c:"#3B7FD4", pts:["utc","sorrento","oldTown","downtown","nationalCity","chulaVista","sanYsidro"] },
-    { c:"#E2892F", pts:["downtown","loganHeights","encanto","lemonGrove","elCajon"] },
-    { c:"#4FA85C", pts:["downtown","oldTown","missionValley","sdsu","santee"] }
-  ];
-  var linesFuture = [
-    { c:"var(--teal)", pts:["cityHeights","kearnyMesa","sorrento"] },
-    { c:"var(--teal)", pts:["chulaVista","otayMesa"] },
-    { c:"var(--teal)", pts:["barrioLogan","encanto","cityHeights"] }
-  ];
-
-  var hoods = [
-    { k:"barrioLogan", n:"Barrio Logan", lx:-13, ly:12, la:"end", t:"Wedged between Interstate 5, the Coronado Bridge ramps, and the working waterfront. One of the most frequently cited environmental justice communities in California, and the origin of decades of community organizing over land use and air quality." },
-    { k:"loganHeights", n:"Logan Heights", lx:0, ly:-14, la:"middle", t:"Cut through by freeway construction in the mid twentieth century. Sits inside the same freeway and port corridor as Barrio Logan, and carries similar exposure to diesel traffic." },
-    { k:"nationalCity", n:"National City", lx:13, ly:5, t:"Bordered by Interstate 5 and the harbor, with truck routes running through residential blocks. The city's own leadership pushed back on the regional mileage charge on the grounds that transit alternatives were not there yet." },
-    { k:"sanYsidro", n:"San Ysidro", lx:13, ly:5, t:"Sits at one of the busiest land border crossings in the world. Vehicles idling in crossing queues concentrate emissions directly against homes and schools." },
-    { k:"cityHeights", n:"City Heights", lx:13, ly:5, t:"Dense and low income, with Interstate 15 running straight through it. High transit ridership relative to the region, but service frequency has not matched the demand." },
-    { k:"encanto", n:"Encanto and Southeastern San Diego", lx:13, ly:10, t:"Along Chollas Creek, the city's most polluted waterway. This is where UC San Diego's EarthLab Community Station operates as a neighborhood scale environmental classroom." },
-    { k:"otayMesa", n:"Otay Mesa", lx:13, ly:5, t:"Freight corridor for the commercial port of entry. Heavy duty trucks, which produce 7 percent of regional emissions, concentrate here rather than spreading across the region." }
-  ];
-  var centers = [
-    { k:"downtown", n:"Downtown", lx:-11, la:"end" }, { k:"sorrento", n:"Sorrento Valley", lx:11 },
-    { k:"kearnyMesa", n:"Kearny Mesa", lx:11 }, { k:"utc", n:"UTC", lx:-11, la:"end" }
+  var burden = ["barrioLogan","loganHeights","nationalCity","sanYsidro","cityHeights","encanto","otayMesa"];
+  var burdenName = {
+    barrioLogan:"Barrio Logan", loganHeights:"Logan Heights", nationalCity:"National City",
+    sanYsidro:"San Ysidro", cityHeights:"City Heights", encanto:"Encanto", otayMesa:"Otay Mesa"
+  };
+  var burdenLab = {
+    barrioLogan:[-11,12,"end"], loganHeights:[0,-13,"middle"], nationalCity:[12,5,"start"],
+    sanYsidro:[12,5,"start"], cityHeights:[12,5,"start"], encanto:[12,11,"start"], otayMesa:[12,5,"start"]
+  };
+  var context = [
+    ["downtown","Downtown",-11,4],["sorrento","Sorrento Valley",11,4],["kearnyMesa","Kearny Mesa",11,4],
+    ["utc","UTC",-11,4],["missionValley","Mission Valley",-11,4],["elCajon","El Cajon",11,4],
+    ["chulaVista","Chula Vista",13,5],["santee","Santee",11,4]
   ];
 
-  var mapSvg = document.getElementById("map");
-  var view = "today";
+  // Corridors. The first three are today's trolley lines; the rest are this plan's.
+  var corridors = [
+    { open:2026, stops:["utc","sorrento","oldTown","downtown","nationalCity","chulaVista","sanYsidro"] },
+    { open:2026, stops:["downtown","loganHeights","encanto","lemonGrove","elCajon"] },
+    { open:2026, stops:["downtown","oldTown","missionValley","sdsu","santee"] },
+    { open:2030, stops:["cityHeights","kearnyMesa","sorrento"] },
+    { open:2032, stops:["chulaVista","otayMesa"] },
+    { open:2034, stops:["barrioLogan","encanto","cityHeights"] }
+  ];
+
+  // Charger roll-out. Priority communities are built out first, then the region.
+  var CH_PER_MARK = 100;
+  var chgByYear   = [0, 12, 26, 40, 56, 70, 83, 95, 105, 114, 120];
+  var trnCoverage = [12, 13, 15, 17, 22, 24, 28, 29, 32, 33, 34];
+  var phases = [
+    "Planning year", "Phase 1: priority communities", "Phase 1: priority communities",
+    "Phase 1: priority communities", "Phase 2: corridors open", "Phase 2: corridors open",
+    "Phase 2: corridors open", "Phase 3: regionwide", "Phase 3: regionwide",
+    "Phase 3: regionwide", "Plan horizon"
+  ];
 
   function mEl(n, a) {
     var e = document.createElementNS("http://www.w3.org/2000/svg", n);
@@ -1090,144 +1115,197 @@
     return e;
   }
   function poly(pts) { return pts.map(function (p) { return p[0] + "," + p[1]; }).join(" "); }
-  function keysToPts(ks) { return ks.map(function (k) { return P[k]; }); }
+  function stopsToPts(ks) { return ks.map(function (k) { return P[k]; }); }
 
-  function drawMap() {
-    mapSvg.textContent = "";
-    var future = view === "future";
+  // Deterministic scatter so the map is identical on every load.
+  function rng(seed) {
+    var s = seed;
+    return function () { s = (s * 1103515245 + 12345) & 0x7fffffff; return s / 0x7fffffff; };
+  }
+  var rand = rng(20260728);
+  var chargers = [];
+  function scatter(hosts, count, priority) {
+    for (var i = 0; i < count; i++) {
+      var h = P[hosts[i % hosts.length]];
+      var a = rand() * Math.PI * 2, d = 7 + rand() * 21;
+      chargers.push({ x: h[0] + Math.cos(a) * d, y: h[1] + Math.sin(a) * d * 0.85, p: priority });
+    }
+  }
+  scatter(burden, 68, true);
+  scatter(["downtown","chulaVista","lemonGrove","missionValley","kearnyMesa","elCajon","santee","oldTown","sdsu","sorrento","utc","delMar"], 52, false);
 
-    // ocean
-    var ocean = [[0,0]].concat(coast).concat([[0,640]]);
-    mapSvg.appendChild(mEl("polygon", { points: poly(ocean), fill: "var(--teal)", opacity: ".07" }));
-    mapSvg.appendChild(mEl("polyline", { points: poly(coast), fill: "none", stroke: "var(--teal)", "stroke-width": 1.5, opacity: ".35" }));
-    // bay
-    mapSvg.appendChild(mEl("polygon", {
+  /* Shared base: ocean, coast, bay, freeways, place labels. */
+  function drawBase(svg) {
+    svg.appendChild(mEl("polygon", { points: poly([[0,0]].concat(coast).concat([[0,660]])), fill: "var(--teal)", opacity: ".07" }));
+    svg.appendChild(mEl("polyline", { points: poly(coast), fill: "none", stroke: "var(--teal)", "stroke-width": 1.5, opacity: ".3" }));
+    svg.appendChild(mEl("polygon", {
       points: poly([[250,404],[268,432],[282,470],[292,510],[286,540],[272,506],[258,466],[246,430]]),
       fill: "var(--teal)", opacity: ".10"
     }));
-
-    // freeways
     freeways.forEach(function (f) {
-      mapSvg.appendChild(mEl("polyline", { points: poly(f.pts), fill: "none", stroke: "var(--amber)", "stroke-width": 3.2, opacity: ".38", "stroke-linecap": "round", "stroke-linejoin": "round" }));
-      var mid = f.pts[f.bi != null ? f.bi : Math.floor(f.pts.length / 2)];
-      var badge = mEl("g", { opacity: ".7" });
-      badge.appendChild(mEl("rect", { x: mid[0] - 11, y: mid[1] - 9, width: 22, height: 15, rx: 3, fill: "var(--surface)", stroke: "var(--amber)", "stroke-width": 1, opacity: ".9" }));
-      var bt = mEl("text", { x: mid[0], y: mid[1] + 2, "font-size": 10, "text-anchor": "middle", fill: "var(--amber)" });
-      bt.textContent = f.n;
-      badge.appendChild(bt);
-      mapSvg.appendChild(badge);
+      svg.appendChild(mEl("polyline", { points: poly(f.pts), fill: "none", stroke: "var(--amber)", "stroke-width": 3, opacity: ".3", "stroke-linecap": "round", "stroke-linejoin": "round" }));
+      var m = f.pts[f.bi];
+      var g = mEl("g", { opacity: ".65" });
+      g.appendChild(mEl("rect", { x: m[0] - 10, y: m[1] - 8.5, width: 20, height: 14, rx: 3, fill: "var(--surface)", stroke: "var(--amber)", "stroke-width": 1 }));
+      var t = mEl("text", { x: m[0], y: m[1] + 2.5, "font-size": 9.5, "text-anchor": "middle", fill: "var(--amber)" });
+      t.textContent = f.n;
+      g.appendChild(t);
+      svg.appendChild(g);
     });
-
-    // transit access buffers
-    var buf = [];
-    linesToday.forEach(function (l) { buf = buf.concat(keysToPts(l.pts)); });
-    if (future) linesFuture.forEach(function (l) { buf = buf.concat(keysToPts(l.pts)); });
-    buf.forEach(function (p) {
-      mapSvg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: future ? 30 : 24, fill: "var(--teal)", opacity: future ? ".16" : ".13" }));
-    });
-
-    // transit lines
-    linesToday.forEach(function (l) {
-      mapSvg.appendChild(mEl("polyline", { points: poly(keysToPts(l.pts)), fill: "none", stroke: l.c, "stroke-width": 4, "stroke-linecap": "round", "stroke-linejoin": "round", opacity: ".9" }));
-    });
-    if (future) {
-      linesFuture.forEach(function (l) {
-        mapSvg.appendChild(mEl("polyline", { points: poly(keysToPts(l.pts)), fill: "none", stroke: l.c, "stroke-width": 4.5, "stroke-linecap": "round", "stroke-linejoin": "round", "stroke-dasharray": "9 6" }));
-      });
-    }
-
-    // stations
-    buf.forEach(function (p) {
-      mapSvg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 3.4, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 1.4, opacity: ".55" }));
-    });
-
-    // chargers appear only in the future view
-    if (future) {
-      hoods.forEach(function (h) {
-        var c = P[h.k];
-        [[-13,-11],[12,-13],[15,10],[-14,11],[0,17]].forEach(function (o) {
-          mapSvg.appendChild(mEl("rect", { x: c[0] + o[0] - 2.6, y: c[1] + o[1] - 2.6, width: 5.2, height: 5.2, rx: 1.2, fill: "var(--teal)", opacity: ".85" }));
-        });
-      });
-    }
-
-    // employment centers
-    centers.forEach(function (c) {
-      var p = P[c.k];
-      mapSvg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 6, fill: "var(--muted)", opacity: ".75" }));
-      var t = mEl("text", { x: p[0] + (c.lx || 11), y: p[1] + 4, "font-size": 11.5, "text-anchor": c.la || "start" });
-      t.textContent = c.n;
-      mapSvg.appendChild(t);
-    });
-
-    // burden neighborhoods
-    hoods.forEach(function (h) {
-      var p = P[h.k];
-      var g = mEl("g", { "class": "hood", tabindex: "0", role: "button" });
-      g.setAttribute("aria-label", h.n);
-      g.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 11, fill: "var(--signal)", opacity: ".16" }));
-      g.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 6.5, fill: "var(--signal)" }));
-      var lab = mEl("text", { x: p[0] + (h.lx || 12), y: p[1] + (h.ly || 4), "font-size": 11.5, fill: "var(--ink)", "text-anchor": h.la || "start" });
-      lab.textContent = h.n.length > 18 ? h.n.split(" and ")[0] : h.n;
-      g.appendChild(lab);
-      function show() {
-        document.getElementById("miTag").textContent = "High burden neighborhood";
-        document.getElementById("miTag").className = "mi-tag";
-        document.getElementById("miName").textContent = h.n;
-        document.getElementById("miBody").textContent = h.t;
-      }
-      g.addEventListener("mouseenter", show);
-      g.addEventListener("focus", show);
-      g.addEventListener("click", show);
-      mapSvg.appendChild(g);
-    });
-
-    // context labels
-    [["missionValley","Mission Valley",-11,4],["sdsu","SDSU",11,4],["santee","Santee",11,4],
-     ["elCajon","El Cajon",11,4],["lemonGrove","Lemon Grove",11,14],["chulaVista","Chula Vista",13,5],
-     ["oldTown","Old Town",-11,4],["delMar","Del Mar",11,4]].forEach(function (c) {
+    context.forEach(function (c) {
       var p = P[c[0]];
-      var t = mEl("text", { x: p[0] + c[2], y: p[1] + c[3], "font-size": 10.5, opacity: ".7", "text-anchor": c[2] < 0 ? "end" : "start" });
+      svg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 3.2, fill: "var(--muted)", opacity: ".6" }));
+      var t = mEl("text", { x: p[0] + c[2], y: p[1] + c[3], "font-size": 10, opacity: ".75", "text-anchor": c[2] < 0 ? "end" : "start" });
       t.textContent = c[1];
-      mapSvg.appendChild(t);
+      svg.appendChild(t);
     });
-
-    // border
-    mapSvg.appendChild(mEl("line", { x1: 254, y1: 600, x2: 476, y2: 600, stroke: "var(--muted)", "stroke-width": 1.4, "stroke-dasharray": "5 4", opacity: ".6" }));
-    var bl = mEl("text", { x: 366, y: 616, "font-size": 10.5, "text-anchor": "middle", "letter-spacing": ".1em" });
-    bl.textContent = "MEXICO";
-    mapSvg.appendChild(bl);
-
-    var ol = mEl("text", { x: 40, y: 96, "font-size": 11, "letter-spacing": ".14em" });
-    ol.textContent = "PACIFIC";
-    mapSvg.appendChild(ol);
-
-    document.getElementById("ms1").innerHTML = future ? '34<span class="u">%</span>' : '12<span class="u">%</span>';
-    document.getElementById("ms2").innerHTML = future ? '7<span class="u">of 7</span>' : '3<span class="u">of 7</span>';
-    document.getElementById("ms3").textContent = future ? "12,000" : "0";
+    svg.appendChild(mEl("line", { x1: 254, y1: 600, x2: 476, y2: 600, stroke: "var(--muted)", "stroke-width": 1.3, "stroke-dasharray": "5 4", opacity: ".55" }));
+    var b = mEl("text", { x: 366, y: 616, "font-size": 10, "text-anchor": "middle", "letter-spacing": ".1em" });
+    b.textContent = "MEXICO";
+    svg.appendChild(b);
+    var o = mEl("text", { x: 152, y: 132, "font-size": 10, "letter-spacing": ".14em", opacity: ".8" });
+    o.textContent = "PACIFIC";
+    svg.appendChild(o);
   }
 
-  Array.prototype.forEach.call(document.querySelectorAll(".map-toggle button"), function (b) {
-    b.addEventListener("click", function () {
-      Array.prototype.forEach.call(document.querySelectorAll(".map-toggle button"), function (x) { x.classList.remove("on"); });
-      b.classList.add("on");
-      view = b.getAttribute("data-view");
-      drawMap();
-      var tag = document.getElementById("miTag");
-      if (view === "future") {
-        tag.textContent = "2036 with plan"; tag.className = "mi-tag ok";
-        document.getElementById("miName").textContent = "Coverage closes";
-        document.getElementById("miBody").textContent = "New transit corridors reach City Heights, Barrio Logan, Encanto, and Otay Mesa. Charging is sited by the published equity map rather than by market demand, which puts it in the multifamily neighborhoods that private investment skips.";
-      } else {
-        tag.textContent = "Select a neighborhood"; tag.className = "mi-tag";
-        document.getElementById("miName").textContent = "San Diego region";
-        document.getElementById("miBody").textContent = "Seven neighborhoods on this map carry the region's heaviest transportation pollution burden. Every one of them sits against a freeway, a port, or a border crossing. Tap any red marker to read why.";
-      }
+  var svgChg = document.getElementById("mapChg");
+  var svgTrn = document.getElementById("mapTrn");
+  var chgMarks = [], trnRings = [], trnCorrs = [];
+
+  function buildMaps() {
+    drawBase(svgChg);
+    drawBase(svgTrn);
+
+    // Charging map: burden neighbourhoods as reference, then the charger marks.
+    burden.forEach(function (k) {
+      var p = P[k], L = burdenLab[k];
+      svgChg.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 5, fill: "var(--signal)", opacity: ".5" }));
+      var t = mEl("text", { x: p[0] + L[0], y: p[1] + L[1], "font-size": 10, "text-anchor": L[2], fill: "var(--ink)", opacity: ".8" });
+      t.textContent = burdenName[k];
+      svgChg.appendChild(t);
     });
+    chargers.forEach(function (c) {
+      var el = mEl("rect", {
+        "class": "pop", x: c.x - 2.7, y: c.y - 2.7, width: 5.4, height: 5.4, rx: 1.3,
+        fill: c.p ? "var(--teal)" : "var(--muted)", opacity: 0
+      });
+      svgChg.appendChild(el);
+      chgMarks.push(el);
+    });
+
+    // Transit map: reach rings sit under the corridors so the lines stay readable.
+    var ringG = mEl("g", {}), lineG = mEl("g", {});
+    svgTrn.appendChild(ringG);
+    svgTrn.appendChild(lineG);
+    corridors.forEach(function (c) {
+      var line = mEl("polyline", {
+        "class": "corr", points: poly(stopsToPts(c.stops)), fill: "none",
+        stroke: "var(--teal)", "stroke-width": c.open === 2026 ? 3.6 : 4,
+        "stroke-linecap": "round", "stroke-linejoin": "round",
+        "stroke-dasharray": c.open === 2026 ? "none" : "9 6", opacity: 0
+      });
+      lineG.appendChild(line);
+      trnCorrs.push({ el: line, open: c.open });
+      c.stops.forEach(function (k) {
+        var p = P[k];
+        var ring = mEl("circle", { "class": "grow", cx: p[0], cy: p[1], r: 0, fill: "var(--teal)", opacity: ".16" });
+        ringG.appendChild(ring);
+        trnRings.push({ el: ring, open: c.open });
+      });
+    });
+    corridors.forEach(function (c) {
+      c.stops.forEach(function (k) {
+        var p = P[k];
+        svgTrn.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 2.8, fill: "var(--surface)", stroke: "var(--ink)", "stroke-width": 1.2, opacity: ".5" }));
+      });
+    });
+    burden.forEach(function (k) {
+      var p = P[k], L = burdenLab[k];
+      svgTrn.appendChild(mEl("circle", { cx: p[0], cy: p[1], r: 5.5, fill: "var(--signal)" }));
+      var t = mEl("text", { x: p[0] + L[0], y: p[1] + L[1], "font-size": 10, "text-anchor": L[2], fill: "var(--ink)", opacity: ".85" });
+      t.textContent = burdenName[k];
+      svgTrn.appendChild(t);
+    });
+  }
+
+  var mYear = document.getElementById("myear"), mPhase = document.getElementById("mphase");
+  var chgN = document.getElementById("chgN"), chgP = document.getElementById("chgP");
+  var trnP = document.getElementById("trnP"), trnC = document.getElementById("trnC");
+  var mscrub = document.getElementById("mscrub");
+  var lastMapYear = -1;
+
+  function updateMaps(year) {
+    if (year === lastMapYear) return;
+    lastMapYear = year;
+    var i = year - 2026;
+    var shown = chgByYear[i];
+
+    for (var k = 0; k < chgMarks.length; k++) {
+      var on = k < shown;
+      chgMarks[k].setAttribute("opacity", on ? (k < 68 ? 0.9 : 0.6) : 0);
+      chgMarks[k].style.transform = on ? "scale(1)" : "scale(0.2)";
+    }
+
+    var prio = Math.min(shown, 68);
+    chgN.textContent = (shown * CH_PER_MARK).toLocaleString("en-US");
+    chgP.innerHTML = (shown ? Math.round(prio / shown * 100) : 0) + '<span class="u">%</span>';
+
+    // Reach rings grow with service frequency, and appear when their corridor opens.
+    var prog = i / 10;
+    var r = 19 + 13 * prog;
+    trnRings.forEach(function (g) {
+      g.el.setAttribute("r", year >= g.open ? r : 0);
+    });
+    var live = 0;
+    trnCorrs.forEach(function (c) {
+      var on = year >= c.open;
+      c.el.setAttribute("opacity", on ? 0.95 : 0.22);
+      c.el.setAttribute("stroke-dasharray", on ? "none" : "9 6");
+      if (on) live++;
+    });
+    trnP.innerHTML = trnCoverage[i] + '<span class="u">%</span>';
+    trnC.textContent = live;
+
+    mYear.textContent = year;
+    mPhase.textContent = phases[i];
+    mscrub.style.setProperty("--pct", (prog * 100) + "%");
+  }
+
+  buildMaps();
+  updateMaps(2026);
+
+  mscrub.addEventListener("input", function () {
+    mstop();
+    updateMaps(parseInt(mscrub.value, 10));
   });
 
-  drawMap();
-
+  /* Playback steps one whole year at a time; the CSS transitions carry the motion
+     in between, so there is no per-frame work here. */
+  var mPlaying = false, mTimer = null;
+  var micon = document.getElementById("micon");
+  function mstart() {
+    if (parseInt(mscrub.value, 10) >= 2036) { mscrub.value = 2026; updateMaps(2026); }
+    mPlaying = true;
+    micon.firstElementChild.setAttribute("d", "M6 5h4v14H6zM14 5h4v14h-4z");
+    document.getElementById("mplay").setAttribute("aria-label", "Pause the build-out");
+    mTimer = setInterval(function () {
+      var y = parseInt(mscrub.value, 10) + 1;
+      if (y > 2036) { mstop(); return; }
+      mscrub.value = y;
+      updateMaps(y);
+      if (y === 2036) mstop();
+    }, 900);
+  }
+  function mstop() {
+    mPlaying = false;
+    if (mTimer) clearInterval(mTimer);
+    mTimer = null;
+    micon.firstElementChild.setAttribute("d", "M8 5v14l11-7z");
+    document.getElementById("mplay").setAttribute("aria-label", "Play the build-out");
+  }
+  document.getElementById("mplay").addEventListener("click", function () {
+    mPlaying ? mstop() : mstart();
+  });
   /* ---------- reveal on scroll ---------- */
   var io = new IntersectionObserver(function (entries) {
     entries.forEach(function (e) {
